@@ -1,6 +1,6 @@
-# Kalimat Plus Plus
+# Kalimat Plus
 
-> Kalimat Plus Plus (كلمات, "words") is a free, browser-based Fusha (Modern Standard Arabic) vocabulary trainer for learners moving beyond the basics, made by Ummah Apps. It follows on from Kalimat, the beginner trainer. URL: https://kalimat-plus.ummahapps.ai/
+> Kalimat Plus (كلمات, "words") is a free, browser-based Fusha (Modern Standard Arabic) vocabulary trainer for learners moving beyond the basics, made by Ummah Apps. It follows on from Kalimat, the beginner trainer. URL: https://kalimat-plus.ummahapps.ai/
 
 ## What it does
 

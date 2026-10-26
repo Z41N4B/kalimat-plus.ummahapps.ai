@@ -1,4 +1,4 @@
-# Kalimat Plus Plus كَلِمَات
+# Kalimat Plus كَلِمَات
 
 A free Fusha (Modern Standard Arabic) vocabulary trainer for discussing deeper topics. Live at https://kalimat-plus.ummahapps.ai/
 

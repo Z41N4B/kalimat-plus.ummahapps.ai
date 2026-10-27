@@ -194,6 +194,9 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .exblock.on,.grid.show-ex .exblock{display:flex}
 .exblock .ar{font-size:1.35rem;line-height:1.7;font-weight:400;text-align:right}
 .exblock .meta{text-align:left}
+.noteblock{display:none;padding:10px 12px;background:var(--card);border:1.5px dashed var(--line);border-radius:12px;font-size:.9rem;line-height:1.55;color:var(--ink-2)}
+.noteblock.on,.grid.show-notes .noteblock{display:block}
+.noteblock .ari{font-family:var(--font-ar);font-size:1.25em;unicode-bidi:isolate}
 .mini{display:flex;gap:6px}
 .mini button{font:inherit;font-weight:800;font-size:.82rem;flex:1;min-height:36px;padding:4px 8px;border:1.5px solid var(--c,var(--line));background:transparent;color:var(--c,var(--ink-2));border-radius:12px;cursor:pointer}
 .mini button:hover{background:color-mix(in srgb,var(--c,var(--card)) 10%,transparent)}
@@ -297,6 +300,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
       </div>
       <label class="check" for="show-pl"><input type="checkbox" id="show-pl"> Show plurals on every card</label>
       <label class="check" for="show-ex"><input type="checkbox" id="show-ex"> Show example sentences on every card</label>
+      <label class="check" for="show-notes"><input type="checkbox" id="show-notes"> Show notes on every card</label>
       <p class="count" id="count"></p>
       <div class="grid" id="grid"><noscript><p class="lead">Kalimat Plus needs JavaScript to show the words, play audio and run the games. Please turn JavaScript on.</p></noscript></div>
     </section>
@@ -402,6 +406,83 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   function colOf(k){return CATCOL[k]||2}
   var TYPES={n:"noun",v:"verb",a:"adjective",p:"phrase"};
   var FORMAL=["لَكِنَّ","لَا شَكَّ أَنَّ","فِي الْمُقَابِلِ","بَيْنَمَا","نَتِيجَةً لِذَلِكَ","بِالْإِضَافَةِ إِلَى ذَلِكَ","فِي الْخِتَامِ"];
+  // Learner notes, keyed by the word as written in DATA
+  var NOTES={
+    "أَعْتَقِدُ أَنَّ":"[[أَنَّ]] (with a shadda) is followed by a noun or pronoun, and the noun takes a fatha: [[أَعْتَقِدُ أَنَّ الصَّبْرَ]]. A pronoun joins on: [[أَعْتَقِدُ أَنَّهُ]] (I believe that he). The same goes for [[أَظُنُّ أَنَّ]], [[يَبْدُو أَنَّ]] and [[أَرَى أَنَّ]].",
+    "لَا شَكَّ أَنَّ":"[[لَا]] here denies a whole category, so [[شَكَّ]] takes a fatha with no tanwin: no doubt at all.",
+    "لَكِنَّ":"[[لَكِنَّ]] is a sister of [[إِنَّ]]: the noun after it takes a fatha ([[لَكِنَّ الْبَرْدَ]]), and a pronoun joins on ([[لَكِنَّهُ]], [[لَكِنِّي]]). Before a verb, use the light form [[لَكِنْ]].",
+    "وَلَكِنْ":"The light [[لَكِنْ]] doesn’t change the next word, so it can come before a verb or a whole sentence. Its sukun becomes a kasra before [[الْ]]: [[لَكِنِ الْبَرْدُ شَدِيدٌ]].",
+    "بَيْنَمَا":"Followed by a whole sentence. It means “whereas” for a contrast, and also “while” for two things happening at the same time.",
+    "عَلَى الرَّغْمِ مِنْ":"Followed by a noun in the kasra; before [[الْ]], [[مِنْ]] becomes [[مِنَ]]. For a whole sentence, add [[أَنَّ]]: [[عَلَى الرَّغْمِ مِنْ أَنَّهُ مُتْعَبٌ]]. A shorter form is [[رَغْمَ]].",
+    "مَعَ أَنَّ":"Like [[أَنَّ]], it is followed by a noun or pronoun with a fatha: [[مَعَ أَنَّهُ صَغِيرٌ]]. Many writers start the second half with [[فَـ]], as in the example, but it can be left out.",
+    "لِأَنَّ":"[[لِأَنَّ]] is followed by a sentence. A pronoun joins on: [[لِأَنَّنِي]] (because I), [[لِأَنَّهُ]] (because he). For a single noun, use [[بِسَبَبِ]].",
+    "بِسَبَبِ":"Followed by a single noun in the kasra: [[بِسَبَبِ الْمَطَرِ]]. For a whole sentence, use [[لِأَنَّ]].",
+    "نَتِيجَةً لِذَلِكَ":"[[نَتِيجَةً]] ends in a fatha with tanwin because it works like an adverb here: “as a result”.",
+    "أَوَّلًا":"A fatha with tanwin ([[ـًا]]) turns a word into an adverb: [[أَوَّلًا]] (firstly), [[ثَانِيًا]] (secondly), [[ثَالِثًا]] (thirdly).",
+    "بِشَكْلٍ عَامٍّ":"[[بِشَكْلٍ]] + a describing word is a common way to make an adverb: [[بِشَكْلٍ جَيِّدٍ]] (well). You will also meet [[عُمُومًا]] (generally).",
+    "مِنَ الْمُهِمِّ أَنْ":"[[أَنْ]] (no shadda) is followed by a verb, which ends in a fatha: [[أَنْ نَسْتَمِعَ]]. Don’t confuse it with [[أَنَّ]], which is followed by a noun.",
+    "اِقْتَرَحَ":"The person you suggest something to comes after [[عَلَى]]: [[اِقْتَرَحَ عَلَيْنَا حَلًّا]].",
+    "وَافَقَ":"Takes [[عَلَى]] for the thing agreed to: [[وَافَقَ عَلَى الْقَرَارِ]]. To agree with a person: [[وَافَقَهُ]] or [[اِتَّفَقَ مَعَهُ]].",
+    "قَارَنَ":"Use [[بَيْنَ]] for the two things compared: [[قَارَنْتُ بَيْنَ الرَّأْيَيْنِ]].",
+    "أَكَّدَ":"Takes a direct object: [[أَكَّدَ أَهَمِّيَّةَ الْوَقْتِ]]. [[أَكَّدَ عَلَى]] is also very common.",
+    "اِعْتَرَضَ":"Takes [[عَلَى]] for the thing objected to: [[اِعْتَرَضَ عَلَى الْقَرَارِ]].",
+    "أَقْنَعَ":"The person comes straight after the verb, and the idea after [[بِ]]: [[أَقْنَعَنِي بِرَأْيِهِ]] (he convinced me of his opinion).",
+    "مَوْضُوع":"Also [[مَوْضُوعَات]]. [[مَوَاضِيع]] never takes tanwin.",
+    "نَتِيجَة":"[[نَتَائِج]] never takes tanwin, and ends in a fatha where you would expect a kasra, unless it has [[الْ]] or an owner after it. Every plural on this pattern works the same way: [[مَشَاكِل]], [[كَوَارِث]], [[مَصَانِع]], [[مَحَاصِيل]].",
+    "مُشْكِلَة":"The textbook plural is [[مُشْكِلَات]]. You will also read and hear [[مَشَاكِل]] everywhere, and both are understood.",
+    "صَلَاة":"In the Quran it is spelt the old way, [[الصَّلَوٰة]], but it is read the same.",
+    "صِيَام":"[[صِيَام]] and [[صَوْم]] both mean fasting, and both are verbal nouns of [[صَامَ]].",
+    "سُورَة":"Before a surah’s name, [[سُورَة]] is the first word of an idafa, so it has no [[الْ]]: [[سُورَةُ الْإِخْلَاصِ]].",
+    "دُعَاء":"The example is a popular saying. It is often quoted as a hadith, but it is not an authentic one.",
+    "تَقْوَى":"It ends in [[ى]], so its ending never changes for case: [[التَّقْوَى]] in every position.",
+    "إِمَام":"[[يَؤُمُّ]] (to lead in prayer) comes from the same root.",
+    "نِيَّة":"[[الْأَعْمَالُ بِالنِّيَّاتِ]] comes from a famous hadith in Bukhari and Muslim that begins [[إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ]].",
+    "آخِرَة":"Often paired with [[الدُّنْيَا]] (this world). The example is a well-known saying, not an authentic hadith.",
+    "مُؤْمِن":"A sound plural: [[مُؤْمِنُونَ]] as the subject, [[مُؤْمِنِينَ]] after a preposition or as an object. Feminine [[مُؤْمِنَة]], plural [[مُؤْمِنَات]].",
+    "صَلَّى":"The final [[ى]] becomes [[يْ]] before endings: [[صَلَّيْتُ]], [[صَلَّيْنَا]]. The present ends in a long ī: [[يُصَلِّي]].",
+    "صَامَ":"The long ā shortens before endings: [[صُمْتُ]] (I fasted), [[صُمْنَا]] (we fasted).",
+    "دَعَا":"The final [[ا]] becomes [[و]] before endings: [[دَعَوْتُ]]. [[دَعَا لَهُ]] = prayed for him; [[دَعَاهُ إِلَى]] = invited him to.",
+    "تَابَ":"Before endings: [[تُبْتُ]] (I repented). Takes [[إِلَى]] for God and [[مِنْ]] or [[عَنْ]] for the sin.",
+    "آمَنَ":"Takes [[بِ]]: [[آمَنَ بِاللَّهِ]]. Don’t confuse it with [[أَمِنَ]] (to feel safe).",
+    "شَكَرَ":"The person comes straight after the verb, and the reason after [[عَلَى]]: [[شَكَرْتُهُ عَلَى الْهَدِيَّةِ]].",
+    "صَبَرَ":"Takes [[عَلَى]] for what you are patient with: [[صَبَرَتْ عَلَى الْمَرَضِ]].",
+    "حَجَّ":"A doubled verb: the two [[ج]]s separate before endings: [[حَجَجْتُ]] (I performed Hajj).",
+    "أَخْلَاق":"This is already a plural, of [[خُلُق]] (a trait of character). [[حُسْنُ الْخُلُقِ]] = good character.",
+    "زَوْج":"[[زَوْج]] can mean a spouse of either sex. [[زَوْجَانِ]] = a married couple.",
+    "قَرِيب":"As a noun it means a relative: plural [[أَقْرِبَاء]], and very commonly [[أَقَارِب]]. As a describing word it means near: [[قَرِيبٌ مِنَ الْبَيْتِ]].",
+    "رَفِيق":"[[الرَّفِيقُ قَبْلَ الطَّرِيقِ]] is a proverb: choose good company before you set out.",
+    "غَيْرَة":"[[غَيْرَة]] is protective jealousy, wanting to keep what is yours. [[حَسَد]] is envy, wanting someone else’s blessing to go.",
+    "شُعُور":"No plural is given here. In everyday writing you will see [[مَشَاعِر]] used as its plural (feelings); strictly, it is the plural of [[مَشْعَر]].",
+    "طُمُوح":"With a damma, [[طُمُوح]] is the noun “ambition”. With a fatha, [[طَمُوح]] is the describing word “ambitious”.",
+    "مِيزَة":"You will also meet [[مَزَايَا]], the plural of the near-twin word [[مَزِيَّة]].",
+    "صَبُور":"Describing words on the [[فَعُول]] pattern don’t take [[ة]] for a woman in fusha: [[امْرَأَةٌ صَبُورٌ]]. In everyday speech you will hear [[صَبُورَة]].",
+    "وَدُود":"Like [[صَبُور]], it doesn’t take [[ة]] for a woman: [[امْرَأَةٌ وَدُودٌ]].",
+    "طَمُوح":"Like [[صَبُور]], it doesn’t take [[ة]] for a woman in fusha: [[فَتَاةٌ طَمُوحٌ]].",
+    "جَبَان":"[[لَا تَكُنْ]] = don’t be. Like [[كَانَ]], it makes the describing word end in a fatha: [[جَبَانًا]].",
+    "عَصَبِيّ":"From [[عَصَب]] (nerve). It means short-tempered, not nervous in the English sense; for worried, use [[قَلِق]].",
+    "أَحَبَّ":"The present [[يُحِبُّ]] starts with a damma, as form IV verbs do. No verbal noun is given: the strict one, [[إِحْبَاب]], is rare, and the noun [[حُبّ]] (love) is used instead.",
+    "وَثِقَ":"Takes [[بِ]]: [[أَثِقُ بِكَ]] (I trust you). The [[و]] drops in the present: [[يَثِقُ]].",
+    "سَامَحَ":"Takes [[عَلَى]] for the fault: [[سَامَحْتُهُ عَلَى خَطَئِهِ]].",
+    "اِعْتَذَرَ":"Takes [[عَنْ]] for the fault, and [[إِلَى]] or [[مِنْ]] for the person: [[اِعْتَذَرْتُ إِلَيْهِ عَنِ التَّأَخُّرِ]].",
+    "غَضِبَ":"Takes [[مِنْ]] or [[عَلَى]] for the person you are angry with: [[غَضِبَ عَلَيْهِ]].",
+    "خَافَ":"Takes [[مِنْ]]: [[أَخَافُ مِنَ الْكِلَابِ]]. Before endings the long ā shortens: [[خِفْتُ]] (I was afraid).",
+    "اِشْتَاقَ":"Takes [[إِلَى]]: [[اِشْتَقْتُ إِلَيْكَ]] (I missed you).",
+    "تَزَوَّجَ":"Takes the person directly, with no preposition: [[تَزَوَّجَهَا]] (he married her). The verbal noun is [[تَزَوُّج]]; the everyday noun for marriage is [[زَوَاج]].",
+    "كَذَبَ":"Takes [[عَلَى]] for the person lied to: [[كَذَبَ عَلَيَّ]] (he lied to me).",
+    "اِفْتَقَدَ":"Takes the person or thing directly: [[أَفْتَقِدُكَ]] (I miss you). Compare [[اِشْتَاقَ إِلَى]], which needs [[إِلَى]].",
+    "الِاحْتِبَاسُ الْحَرَارِيُّ":"Literally “heat trapping”.",
+    "نِفَايَات":"This is already a plural. The singular [[نِفَايَة]] is rarely used.",
+    "تَدْوِير":"Literally “turning round”, from [[دَارَ]] (to turn). [[إِعَادَةُ التَّدْوِيرِ]] is also common.",
+    "صَحْرَاء":"It never takes tanwin, because of its [[ـَاءُ]] ending. Another plural is [[صَحْرَاوَات]].",
+    "مُحِيط":"It also means surroundings. [[الْمُحِيطُ الْأَطْلَسِيُّ]] = the Atlantic Ocean.",
+    "زِرَاعَة":"Also a verbal noun of [[زَرَعَ]], alongside [[زَرْع]].",
+    "مُلَوَّث":"The fatha on the [[و]] makes it passive: polluted. With a kasra, [[مُلَوِّث]] means polluting, or a polluter.",
+    "مُهَدَّد":"The fatha before the last letter makes it passive: threatened. With a kasra, [[مُهَدِّد]] means threatening.",
+    "ضَارّ":"Takes [[بِ]]: [[ضَارٌّ بِالصِّحَّةِ]] (harmful to health).",
+    "حَمَى":"The final [[ى]] becomes [[يْ]] before endings: [[حَمَيْتُ]] (I protected). The present ends in a long ī: [[يَحْمِي]].",
+    "حَافَظَ":"Takes [[عَلَى]]: [[نُحَافِظُ عَلَى الْبِيئَةِ]].",
+    "وَفَّرَ":"It means both to save (water, money) and to provide: [[وَفَّرَ لَهُمُ الطَّعَامَ]] (he provided them with food)."
+  };
   var DATA={
   disc:[
     ["p","فِي رَأْيِي","in my opinion","","","فِي رَأْيِي، هَذَا الْحَلُّ هُوَ الْأَنْسَبُ.","In my opinion, this solution is the most suitable."],
@@ -655,7 +736,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   ]};
   var BUILTIN=[];
   CATS.forEach(function(c){DATA[c[0]].forEach(function(r,i){
-    var w={id:c[0]+"-"+i,cat:c[0],t:r[0],ar:r[1],en:r[2],ex:r[5],exen:r[6],pl:"",pt:"",pres:"",ms:""};
+    var w={id:c[0]+"-"+i,cat:c[0],t:r[0],ar:r[1],en:r[2],ex:r[5],exen:r[6],pl:"",pt:"",pres:"",ms:"",note:NOTES[r[1]]||""};
     if(r[0]==="n"){w.pl=r[3];w.pt=r[4]}
     if(r[0]==="v"){w.pres=r[3];w.ms=r[4]}
     BUILTIN.push(w);
@@ -670,6 +751,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   };
   function $(s,r){return (r||document).querySelector(s)}
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  // Notes mark Arabic as [[...]] so it gets the Arabic font and direction
+  function noteHTML(s){return esc(s).replace(/\[\[(.+?)\]\]/g,'<bdi class="ari" lang="ar" dir="rtl">$1</bdi>')}
   function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   function norm(s){return String(s).replace(/[ً-ٰٟـ]/g,"").replace(/[أإآ]/g,"ا").toLowerCase()}
   function lsGet(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
@@ -779,7 +862,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     $("#grid").innerHTML=list.length?list.map(function(w){
       var long=w.ar.length>14?" long":"";
       var forms=(w.t==="v"&&(w.pres||w.ms))?'<span class="forms" lang="ar" dir="rtl">'+esc(w.pres)+(w.pres&&w.ms?" · ":"")+esc(w.ms)+'</span>':"";
-      var mini='<div class="mini">'+(w.ex?'<button type="button" data-ex="'+esc(w.id)+'" aria-label="'+esc(w.en)+': example sentence">Example</button>':'')+(w.pl?'<button type="button" data-pl="'+esc(w.id)+'" aria-label="'+esc(w.en)+': plural">Plural</button>':'')+'</div>';
+      var mini='<div class="mini">'+(w.ex?'<button type="button" data-ex="'+esc(w.id)+'" aria-label="'+esc(w.en)+': example sentence">Example</button>':'')+(w.pl?'<button type="button" data-pl="'+esc(w.id)+'" aria-label="'+esc(w.en)+': plural">Plural</button>':'')+(w.note?'<button type="button" data-note="'+esc(w.id)+'" aria-label="'+esc(w.en)+': note">Note</button>':'')+'</div>';
       return '<div class="cell'+(learned[w.id]?' done':'')+'" style="--c:var(--h'+colOf(w.cat)+')">'+
         '<button class="card" type="button" data-id="'+esc(w.id)+'" aria-label="'+esc(w.en)+', tap to hear">'+
           '<span class="ttag">'+TYPES[w.t]+(FORMAL.indexOf(w.ar)>=0?' · formal':'')+'</span>'+
@@ -789,7 +872,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
           (w.pl?'<span class="pl"><span class="ar" lang="ar" dir="rtl">'+esc(w.pl)+'</span><span class="tag">'+(w.pt==="s"?"sound plural":"broken plural")+'</span></span>':'')+
         '</button>'+
         (w.ex?'<div class="exblock"><span class="ar" lang="ar" dir="rtl">'+esc(w.ex)+'</span><span class="meta">'+esc(w.exen)+'</span></div>':'')+
-        (w.ex||w.pl?mini:'')+
+        (w.note?'<div class="noteblock">'+noteHTML(w.note)+'</div>':'')+
+        (w.ex||w.pl||w.note?mini:'')+
         '<button class="learn'+(learned[w.id]?' on':'')+'" type="button" data-learn="'+esc(w.id)+'" aria-pressed="'+(learned[w.id]?'true':'false')+'" aria-label="'+esc(w.en)+': mark as learned">'+learnLabel(w.id)+'</button>'+
         (learned[w.id]?'<button class="learn kw'+(known[w.id]?' on':'')+'" type="button" data-known="'+esc(w.id)+'" aria-pressed="'+(known[w.id]?'true':'false')+'" aria-label="'+esc(w.en)+': known well">'+(known[w.id]?ICON.check+'Known well':'Known well')+'</button>':'')+
       '</div>';
@@ -807,6 +891,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   $("#show").addEventListener("change",function(){filter.show=this.value;renderWords()});
   $("#show-pl").addEventListener("change",function(){$("#grid").classList.toggle("show-pl",this.checked)});
   $("#show-ex").addEventListener("change",function(){$("#grid").classList.toggle("show-ex",this.checked)});
+  $("#show-notes").addEventListener("change",function(){$("#grid").classList.toggle("show-notes",this.checked)});
   $("#grid").addEventListener("click",function(e){
     var kb=e.target.closest("[data-known]");
     if(kb){
@@ -826,6 +911,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
       if(ew){var blk=ex.closest(".cell").querySelector(".exblock");blk.classList.add("on");speak(ew.ex,ex)}
       return;
     }
+    var nb=e.target.closest("[data-note]");
+    if(nb){nb.closest(".cell").querySelector(".noteblock").classList.toggle("on");return}
     var pb=e.target.closest("[data-pl]");
     if(pb){
       var pw=byId(pb.dataset.pl);

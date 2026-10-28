@@ -14,7 +14,7 @@
 - Verbs show the past tense, present tense and verbal noun (masdar). Nouns show their plural, labelled as a sound or broken plural.
 - Words and sentences are spoken aloud using the device's text-to-speech voice at slow, normal or natural speed.
 - Games: a multiple-choice reading quiz, "say it from memory", "say the verb forms" and "say the plural".
-- Progress tracking: mark words as learned, then as known well. The game uses learned words that are not yet known well.
+- Progress tracking: mark words as learned and they go into the game. Get a word right 5 times in a row and it moves to Known well by itself. Known-well words come back for spaced memory checks (after 3 days, 1 week, 2 weeks, 1 month, 2 months, 4 months); a forgotten word goes back into the game.
 - Learners can add their own words with plurals, verb forms and example sentences.
 - Free, no account, no ads. Progress is stored only in the learner's browser.
 

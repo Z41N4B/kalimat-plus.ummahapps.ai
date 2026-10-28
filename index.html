@@ -87,7 +87,8 @@
         "Nouns with sound or broken plurals",
         "Text-to-speech audio at slow, normal or natural speed",
         "Games: read it, say it from memory, say the verb forms, say the plural",
-        "Learned and known-well progress tracking",
+        "Learned and known-well progress tracking: 5 right answers in a row moves a word to Known well",
+        "Spaced memory checks for known-well words, with forgotten words returned to practice",
         "Add your own words"
       ],
       "image": "https://kalimat-plus.ummahapps.ai/og-image.png",
@@ -245,6 +246,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .row .ar-s{font-family:var(--font-ar);font-size:1.7rem;line-height:1.4;font-weight:700;color:var(--c,var(--ink))}
 .row .en-s{color:var(--ink-2);font-size:.9rem}
 .en-k{font-size:1.4rem;font-weight:800}
+.duebox{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:0 0 16px;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:14px;font-weight:700}
+.duebox[hidden]{display:none}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:min(92vw,420px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:700;font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;text-align:center}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 @media (max-width:640px){.row3{grid-template-columns:1fr 1fr}.row3 input{grid-column:1/-1}}
@@ -271,7 +274,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   <main>
     <section id="view-words" aria-labelledby="h-words">
       <h2 id="h-words">Tap a word to hear it</h2>
-      <p class="lead">Each word has its forms or plural and an example sentence. Tap Mark as learned, then Known well when it is secure. The game only uses learned words that are not yet known well.</p>
+      <p class="lead">Each word has its forms or plural and an example sentence. Tap Mark as learned to add a word to the game. Get it right 5 times in a row in the game and it moves to Known well by itself, or tap Known well yourself. Known well words come back now and then for a memory check.</p>
       <div class="voice-row">
         <label for="voice-sel">Voice</label>
         <select id="voice-sel" aria-label="Voice"></select>
@@ -296,7 +299,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
           <select id="show" aria-label="Show">
             <option value="all">All words</option>
             <option value="todo">Still learning</option>
-            <option value="learned">Learned</option>
+            <option value="learned">Learned, still practising</option>
             <option value="known">Known well</option>
           </select>
         </div>
@@ -321,6 +324,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
           <button class="chip-btn" type="button" data-mode="pl" aria-pressed="false">Say the plural</button>
         </div>
       </div>
+      <div class="duebox" id="q-due" hidden><span id="q-due-text"></span><button class="btn small" id="q-due-go" type="button">Check them now</button></div>
       <div id="q-empty" hidden><p class="lead" id="q-empty-text"></p><button class="btn primary" id="q-go" type="button">Go to Words</button></div>
       <div id="q-play">
         <div class="prompt" id="q-prompt"></div>
@@ -346,7 +350,26 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 
     <section id="view-known" hidden aria-labelledby="h-known">
       <h2 id="h-known">Known well</h2>
-      <p class="lead">Words you know really well. They no longer come up in the game.</p>
+      <p class="lead">Words you know really well. They no longer come up in the game, but they come back for a memory check now and then: after 3 days, then 1 week, 2 weeks, 1 month, 2 months and 4 months. If you forget one, it goes back into the game.</p>
+      <div class="duebox" id="k-due-box"><span id="k-due"></span><button class="btn primary" id="k-start" type="button">Start memory check</button></div>
+      <div id="k-check" hidden>
+        <div class="game-bar"><h3 style="margin:0">Memory check</h3><span class="score" id="k-left"></span></div>
+        <div class="prompt" id="k-prompt"></div>
+        <div class="say-actions">
+          <div class="ar rword" id="k-word" lang="ar" dir="rtl" hidden></div>
+          <span class="meta" id="k-tag" hidden></span>
+          <button class="btn primary big" id="k-show" type="button"></button>
+          <div id="k-judge" hidden>
+            <div class="judge">
+              <div class="jcol"><button class="jbtn yes" id="k-yes" type="button" aria-label="I remembered"></button><span>I remembered</span></div>
+              <div class="jcol"><button class="jbtn no" id="k-no" type="button" aria-label="I forgot"></button><span>I forgot</span></div>
+            </div>
+            <p style="text-align:center;margin:14px 0 0"><button class="btn" id="k-replay" type="button"></button></p>
+          </div>
+          <button class="btn" id="k-stop" type="button">Stop checking</button>
+        </div>
+      </div>
+      <div id="k-browse">
       <div class="chips">
         <div class="seg" id="k-mode" role="group" aria-label="Show">
           <button type="button" data-k="ar" aria-pressed="true">Arabic only</button>
@@ -355,6 +378,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
       </div>
       <p class="count" id="k-count"></p>
       <ul class="rows" id="k-list"></ul>
+      </div>
     </section>
 
     <section id="view-mine" hidden aria-labelledby="h-mine">
@@ -860,6 +884,9 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 
   var learned=lsGet("kpp-learned",{});
   var known=lsGet("kpp-known",{});
+  var streak=lsGet("kpp-streak",{});
+  var review=lsGet("kpp-review",{});
+  var GOAL=5,GAPS=[3,7,14,30,60,120],DAY=864e5;
   var custom=lsGet("kpp-custom",[]).filter(function(w){return w&&w.id&&w.ar&&w.en});
   custom.forEach(function(w){w.custom=true;w.t=w.t||"n";w.pl=w.pl||"";w.pt=w.pt||"";w.pres=w.pres||"";w.ms=w.ms||"";w.ex=w.ex||"";w.exen=w.exen||""});
   var voice=lsGet("kpp-voice",{name:"",rate:0.85});
@@ -867,6 +894,17 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   var inApp=/FBAN|FBAV|Instagram|WhatsApp|Snapchat|TikTok|Line\/|; wv\)/i.test(navigator.userAgent||"");
   var filter={cat:"all",type:"",show:"all",q:""};
 
+  function schedule(id,step){step=Math.min(step,GAPS.length-1);review[id]={s:step,due:Date.now()+GAPS[step]*DAY};lsSet("kpp-review",review)}
+  function makeKnown(id){known[id]=1;delete streak[id];lsSet("kpp-known",known);lsSet("kpp-streak",streak);schedule(id,0)}
+  function unKnow(id){delete known[id];delete review[id];delete streak[id];lsSet("kpp-known",known);lsSet("kpp-review",review);lsSet("kpp-streak",streak)}
+  function forget(id){delete learned[id];unKnow(id);lsSet("kpp-learned",learned)}
+  function tally(id,ok){
+    if(!ok){if(streak[id]){delete streak[id];lsSet("kpp-streak",streak)}return 0}
+    var n=(streak[id]||0)+1;
+    if(n>=GOAL){makeKnown(id);return -1}
+    streak[id]=n;lsSet("kpp-streak",streak);return n;
+  }
+  function dueList(){var now=Date.now();return allWords().filter(function(w){return known[w.id]&&(!review[w.id]||review[w.id].due<=now)})}
   function allWords(){return BUILTIN.concat(custom)}
   function byId(id){return allWords().filter(function(w){return w.id===id})[0]}
   function inCat(w,c){return c==="all"||(c==="mine"?!!w.custom:w.cat===c)}
@@ -945,7 +983,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     return allWords().filter(function(w){
       if(!inCat(w,filter.cat))return false;
       if(filter.type&&w.t!==filter.type)return false;
-      if(filter.show==="learned"&&!learned[w.id])return false;
+      if(filter.show==="learned"&&(!learned[w.id]||known[w.id]))return false;
       if(filter.show==="todo"&&learned[w.id])return false;
       if(filter.show==="known"&&!known[w.id])return false;
       if(q&&norm(w.ar).indexOf(q)<0&&norm(w.en).indexOf(q)<0)return false;
@@ -955,7 +993,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   function learnLabel(id){return learned[id]?ICON.check+"Learned":"Mark as learned"}
   function renderCount(){
     var all=allWords(),n=all.filter(function(w){return learned[w.id]}).length,k=all.filter(function(w){return known[w.id]}).length;
-    $("#count").textContent=n+" of "+all.length+" words learned · "+k+" known well";
+    var d=dueList().length;
+    $("#count").textContent=n+" of "+all.length+" words learned · "+k+" known well"+(d?" · "+d+" due for a memory check":"");
   }
   function renderWords(){
     var list=visible();
@@ -996,14 +1035,14 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     var kb=e.target.closest("[data-known]");
     if(kb){
       var kid=kb.dataset.known;
-      if(known[kid])delete known[kid];else known[kid]=1;
-      lsSet("kpp-known",known);Q.last=null;renderWords();return;
+      if(known[kid])unKnow(kid);else makeKnown(kid);
+      Q.last=null;renderWords();return;
     }
     var l=e.target.closest("[data-learn]");
     if(l){
       var id=l.dataset.learn;
-      if(learned[id]){delete learned[id];delete known[id];lsSet("kpp-known",known)}else learned[id]=1;
-      lsSet("kpp-learned",learned);Q.last=null;renderWords();return;
+      if(learned[id])forget(id);else{learned[id]=1;lsSet("kpp-learned",learned)}
+      Q.last=null;renderWords();return;
     }
     var ex=e.target.closest("[data-ex]");
     if(ex){
@@ -1031,6 +1070,12 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 
   var Q={mode:"read",target:null,opts:[],last:null,locked:false,answered:false,right:0,total:0};
   function quizPool(){return allWords().filter(function(w){return learned[w.id]&&!known[w.id]})}
+  function runText(n){
+    if(n<0)return "Right "+GOAL+" times in a row, so it has moved to Known well.";
+    if(n>0)return "Right "+n+(n===1?" time":" times")+" in a row. "+(GOAL-n)+" more to Known well.";
+    return "";
+  }
+  function renderDue(){var d=dueList().length;$("#q-due").hidden=!d;$("#q-due-text").textContent=d+(d===1?" known-well word is":" known-well words are")+" due for a memory check.";}
   function renderScore(){$("#q-score").textContent="Right first time: "+Q.right+" of "+Q.total}
   function isRecall(){return Q.mode==="recall"||Q.mode==="pl"||Q.mode==="forms"}
   function modePool(){
@@ -1040,6 +1085,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     return pool;
   }
   function newQ(){
+    renderDue();
     var pool=modePool();
     var recall=isRecall();
     var ok=pool.length>=(recall?1:4);
@@ -1094,13 +1140,13 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   $("#q-opts").addEventListener("click",function(e){
     var b=e.target.closest(".qopt");if(!b||Q.locked||!Q.target)return;
     var good=b.dataset.id===Q.target.id;
-    if(!Q.answered){Q.answered=true;Q.total++;if(good)Q.right++;renderScore()}
+    if(!Q.answered){Q.answered=true;Q.total++;if(good)Q.right++;Q.run=tally(Q.target.id,good);renderScore();if(Q.run<0)renderWords()}
     if(good){
       Q.locked=true;b.classList.add("hit");
       var m=b.querySelector(".mark");m.className="mark ok";m.innerHTML=ICON.check;
       $("#q-opts").classList.add("done");
       tone(true);
-      $("#q-msg").innerHTML='Yes! <span class="ar-s" lang="ar" dir="rtl">'+esc(Q.target.ar)+'</span> means '+esc(Q.target.en)+'.';
+      $("#q-msg").innerHTML='Yes! <span class="ar-s" lang="ar" dir="rtl">'+esc(Q.target.ar)+'</span> means '+esc(Q.target.en)+'. '+runText(Q.run);
       (function(t){setTimeout(function(){if(Q.target&&Q.target.id===t.id)speak(t.ar,null)},600)})(Q.target);
       $("#q-next").hidden=false;$("#q-next").focus();
     }else{
@@ -1159,7 +1205,10 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     R.stage="done";
     var id=R.cur;
     Q.total++;if(ok)Q.right++;
-    if(ok){tone(true);R.queue.push(id)}
+    var run=tally(id,ok),w=byId(id);
+    if(run<0){renderWords();toast(w.ar+" moved to Known well. You said it "+GOAL+" times in a row.",4000)}
+    else if(run>0)toast(runText(run),2000);
+    if(ok){tone(true);if(run>=0)R.queue.push(id)}
     else{tone(false);R.queue.splice(Math.min(2,R.queue.length),0,id)}
     renderScore();
     setTimeout(function(){if(isRecall())newQ()},ok?1000:900);
@@ -1173,11 +1222,12 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     document.querySelectorAll("#k-mode button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.k===kmode))});
     $("#k-count").textContent=list.length+(list.length===1?" word":" words")+" known well";
     $("#k-list").innerHTML=list.length?list.map(function(w){
-      var main=kmode==="ar"?'<span class="ar-s" lang="ar" dir="rtl">'+esc(w.ar)+'</span>':'<span class="en-k">'+esc(w.en)+'</span>';
+      var main=(kmode==="ar"?'<span class="ar-s" lang="ar" dir="rtl">'+esc(w.ar)+'</span>':'<span class="en-k">'+esc(w.en)+'</span>')+'<span class="en-s">'+nextCheck(w.id)+'</span>';
       return '<li class="row" data-id="'+esc(w.id)+'" style="--c:var(--h'+colOf(w.cat)+')"><div class="info">'+main+'</div>'+
         '<button class="btn small" type="button" data-act="play">'+ICON.speaker+'<span>Hear it</span></button>'+
         '<button class="btn small" type="button" data-act="back">Practise again</button></li>';
-    }).join(""):'<li class="lead">Nothing here yet. On the Words tab, mark a word as learned, then tap Known well when you know it really well.</li>';
+    }).join(""):'<li class="lead">Nothing here yet. Mark words as learned on the Words tab, then get them right 5 times in a row in the game, or tap Known well when you know a word really well.</li>';
+    renderKDue();
   }
   $("#k-mode").addEventListener("click",function(e){
     var b=e.target.closest("button[data-k]");if(!b)return;
@@ -1187,8 +1237,71 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     var b=e.target.closest("button[data-act]");if(!b)return;
     var id=b.closest(".row").dataset.id,w=byId(id);
     if(b.dataset.act==="play"){if(w)speak(fullText(w),b)}
-    else{delete known[id];lsSet("kpp-known",known);Q.last=null;renderKnown();renderWords();toast("Moved back to practice.")}
+    else{unKnow(id);Q.last=null;renderKnown();renderWords();toast("Moved back to practice.")}
   });
+
+  function nextCheck(id){
+    var r=review[id];if(!r||r.due<=Date.now())return "Due for a memory check";
+    var d=Math.ceil((r.due-Date.now())/DAY);return "Next check in "+d+(d===1?" day":" days");
+  }
+  function renderKDue(){
+    var d=dueList().length;
+    $("#k-due-box").hidden=!d||!$("#k-check").hidden;
+    $("#k-due").textContent=d+(d===1?" word is":" words are")+" due for a memory check.";
+  }
+  var C={queue:[],cur:null,dir:"en",stage:"prompt",kept:0,lost:0};
+  $("#k-show").innerHTML=ICON.eye+"<span>Show me</span>";
+  $("#k-yes").innerHTML=ICON.check;
+  $("#k-no").innerHTML=ICON.cross;
+  $("#k-replay").innerHTML=ICON.speaker+"<span>Hear it again</span>";
+  function startCheck(){
+    C.queue=shuffle(dueList().map(function(w){return w.id}));C.kept=0;C.lost=0;
+    if(!C.queue.length)return;
+    $("#k-check").hidden=false;$("#k-browse").hidden=true;$("#k-due-box").hidden=true;
+    nextCheckWord();
+  }
+  function endCheck(){
+    stopSpeech();
+    var n=C.kept+C.lost;
+    $("#k-check").hidden=true;$("#k-browse").hidden=false;C.cur=null;
+    renderKnown();renderWords();
+    if(n)toast("You remembered "+C.kept+" of "+n+"."+(C.lost?" "+C.lost+(C.lost===1?" word has":" words have")+" gone back into the game for practice.":" Well done!"),6000);
+  }
+  function nextCheckWord(){
+    C.cur=C.queue.shift();
+    if(!C.cur){endCheck();return}
+    var w=byId(C.cur);if(!w||!known[C.cur]){nextCheckWord();return}
+    C.stage="prompt";C.dir=Math.random()<0.5?"en":"ar";
+    var p=$("#k-prompt");
+    if(C.dir==="en")p.innerHTML='<span class="en-big">'+esc(w.en)+'</span><span class="meta">Say the Arabic out loud, then tap the eye to check.</span>';
+    else p.innerHTML='<span class="ar" lang="ar" dir="rtl">'+esc(w.ar)+'</span><span class="meta">What does it mean? Say it, then tap the eye to check.</span>';
+    $("#k-word").style.setProperty("--c","var(--h"+colOf(w.cat)+")");
+    $("#k-word").hidden=true;$("#k-tag").hidden=true;$("#k-judge").hidden=true;$("#k-show").hidden=false;
+    $("#k-left").textContent=(C.queue.length+1)+" left";
+  }
+  $("#k-start").addEventListener("click",startCheck);
+  $("#k-stop").addEventListener("click",endCheck);
+  $("#q-due-go").addEventListener("click",function(){show("known");startCheck()});
+  $("#k-show").addEventListener("click",function(){
+    if(C.stage!=="prompt")return;
+    C.stage="reveal";
+    var w=byId(C.cur);
+    $("#k-word").textContent=w.ar;$("#k-word").hidden=false;
+    $("#k-tag").textContent=w.en;$("#k-tag").hidden=false;
+    $("#k-show").hidden=true;$("#k-judge").hidden=false;
+    speak(fullText(w),null);
+  });
+  $("#k-replay").addEventListener("click",function(){var w=byId(C.cur);if(w)speak(fullText(w),this)});
+  function judgeCheck(ok){
+    if(C.stage!=="reveal")return;
+    C.stage="done";
+    var id=C.cur;
+    if(ok){tone(true);C.kept++;schedule(id,((review[id]||{}).s||0)+1)}
+    else{tone(false);C.lost++;unKnow(id);Q.last=null}
+    setTimeout(function(){if(!$("#k-check").hidden)nextCheckWord()},ok?700:900);
+  }
+  $("#k-yes").addEventListener("click",function(){judgeCheck(true)});
+  $("#k-no").addEventListener("click",function(){judgeCheck(false)});
 
   function renderAddCats(){
     $("#add-cat").innerHTML=[["mine","My words"]].concat(CATS).map(function(c){return '<option value="'+c[0]+'">'+esc(c[1])+'</option>'}).join("");
@@ -1244,8 +1357,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
         b.dataset.arm="1";b.querySelector("span").textContent="Tap again";
         setTimeout(function(){if(b.isConnected){b.dataset.arm="";b.querySelector("span").textContent="Remove"}},3000);
       }else{
-        custom=custom.filter(function(x){return x.id!==id});delete learned[id];delete known[id];
-        lsSet("kpp-custom",custom);lsSet("kpp-learned",learned);lsSet("kpp-known",known);
+        custom=custom.filter(function(x){return x.id!==id});forget(id);
+        lsSet("kpp-custom",custom);
         renderMine();renderWords();toast("Removed.");
       }
     }
@@ -1254,6 +1367,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   var tabs=document.querySelectorAll(".tab");
   function show(name){
     stopSpeech();
+    if(name!=="known"&&C.cur)endCheck();
     tabs.forEach(function(t){if(t.dataset.tab===name)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
     ["words","quiz","known","mine"].forEach(function(n){$("#view-"+n).hidden=(n!==name)});
     if(name==="known")renderKnown();

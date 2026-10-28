@@ -10,7 +10,8 @@ A free Fusha (Modern Standard Arabic) vocabulary trainer for discussing deeper t
 - Verbs with present tense and verbal noun; nouns with sound or broken plurals
 - Notes on 74 words: which preposition a verb takes, tricky plurals and endings, and words often confused
 - Games: read it, say it from memory, say the verb forms, say the plural
-- Mark words as learned, then as known well
+- Mark words as learned; 5 right in a row in the game moves a word to Known well
+- Spaced memory checks bring Known well words back now and then; forgotten ones return to the game
 - Add your own words
 
 ## SEO and GEO

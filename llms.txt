@@ -4,9 +4,10 @@
 
 ## What it does
 
-- 242 Fusha words and phrases in four topics:
+- 302 Fusha words and phrases in five topics:
   - Discussion language (60): giving opinions (في رأيي، أعتقد أن، من وجهة نظري), agreeing and disagreeing, contrasting (لكنّ، بينما، في المقابل، على الرغم من), cause and effect (لأنّ، بسبب، لذلك، نتيجةً لذلك), examples, adding points and concluding. Formal linking words are labelled.
   - Religion and worship (51): prayer, wudu, fasting, zakat, sadaqah, Hajj, Umrah, Quran, dua, dhikr, iman, taqwa, tawbah and related verbs.
+  - Tarbiyyah and upbringing (60): Islamic upbringing and parenting, adab, role models (qudwah), fitrah, values, habits, encouragement and reward, discipline, rights and duties, being dutiful to parents (birr al-walidayn), and verbs such as to raise (rabba), to discipline (addaba), to advise, to encourage and to obey.
   - Relationships and character (74): friendship, trust, respect, honesty, emotions, personality traits and related verbs.
   - Environment (57): climate, global warming, pollution, recycling, energy, natural disasters, sustainability and related verbs.
 - Every entry has full harakat (vowel marks), an English meaning, and an example sentence in Arabic with an English translation.
@@ -19,7 +20,7 @@
 
 ## Who it is for
 
-Intermediate learners of Modern Standard Arabic who want to talk about ideas in Fusha: GCSE and A-level Arabic students, home-schooling families, and adults in Quranic or Madinah-style Arabic classes.
+Intermediate learners of Modern Standard Arabic who want to talk about ideas in Fusha: GCSE and A-level Arabic students, home-schooling families, parents learning the language of tarbiyyah, and adults in Quranic or Madinah-style Arabic classes.
 
 ## Links
 

@@ -2,7 +2,7 @@
 
 A free Fusha (Modern Standard Arabic) vocabulary trainer for discussing deeper topics. Live at https://kalimat-plus.ummahapps.ai/
 
-**Words:** 242 words and phrases with full harakat in four topics: discussion language (opinions, contrast, cause and effect, linking words), religion and worship, relationships and character, and the environment.
+**Words:** 302 words and phrases with full harakat in five topics: discussion language (opinions, contrast, cause and effect, linking words), religion and worship, tarbiyyah and upbringing, relationships and character, and the environment.
 
 ## Features
 - Tap any word to hear it at slow, normal or natural speed (uses the device's Arabic text-to-speech voice)

@@ -256,7 +256,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .en-k{font-size:1.4rem;font-weight:800}
 .duebox{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:0 0 16px;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:14px;font-weight:700}
 .duebox[hidden]{display:none}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:min(92vw,420px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:700;font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;text-align:center}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);width:max-content;max-width:min(92vw,420px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:22px;font-weight:700;font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;text-align:center}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 @media (max-width:640px){.row3{grid-template-columns:1fr 1fr}.row3 input{grid-column:1/-1}}
 @media (max-width:420px){.qopts{grid-template-columns:1fr}}
@@ -693,7 +693,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     ["n","مُرَاهَقَة","adolescence","","","تَحْتَاجُ مَرْحَلَةُ الْمُرَاهَقَةِ إِلَى صَبْرٍ وَحِكْمَةٍ.","Adolescence needs patience and wisdom."],
     ["n","فِطْرَة","innate nature (fitrah)","","","يُولَدُ كُلُّ مَوْلُودٍ عَلَى الْفِطْرَةِ.","Every child is born upon the fitrah."],
     ["n","حِكْمَة","wisdom","حِكَم","b","عَالَجَ الْأَبُ الْمُشْكِلَةَ بِحِكْمَةٍ.","The father dealt with the problem wisely."],
-    ["n","نَصِيحَة","advice","نَصَائِح","b","اسْتَمَعَ الْوَلَدُ إِلَى نَصِيحَةِ جَدِّهِ.","The boy listened to his grandfather's advice."],
+    ["n","نَصِيحَة","advice","نَصَائِح","b","اِسْتَمَعَ الْوَلَدُ إِلَى نَصِيحَةِ جَدِّهِ.","The boy listened to his grandfather's advice."],
     ["n","عَادَة","habit","عَادَات","s","الْقِرَاءَةُ قَبْلَ النَّوْمِ عَادَةٌ جَمِيلَةٌ.","Reading before sleep is a lovely habit."],
     ["n","قِيمَة","value","قِيَم","b","نُعَلِّمُ أَبْنَاءَنَا الْقِيَمَ الْإِسْلَامِيَّةَ.","We teach our children Islamic values."],
     ["n","سُلُوك","behaviour","","","تَحَسَّنَ سُلُوكُ الطِّفْلِ كَثِيرًا.","The child's behaviour improved a lot."],
@@ -721,7 +721,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     ["p","قُرَّةُ عَيْنٍ","comfort and joy (of the eyes)","","","الْأَوْلَادُ الصَّالِحُونَ قُرَّةُ عَيْنِ وَالِدَيْهِمْ.","Righteous children are the joy of their parents' eyes."],
     ["p","بَارَكَ اللَّهُ فِيكَ","may God bless you","","","بَارَكَ اللَّهُ فِيكَ يَا بُنَيَّ عَلَى مُسَاعَدَتِكَ.","May God bless you, my son, for your help."],
     ["p","جَزَاكَ اللَّهُ خَيْرًا","may God reward you with good","","","جَزَاكَ اللَّهُ خَيْرًا عَلَى نَصِيحَتِكَ.","May God reward you with good for your advice."],
-    ["a","مُؤَدَّب","well-mannered","","","ابْنُكَ وَلَدٌ مُؤَدَّبٌ.","Your son is a well-mannered boy."],
+    ["a","مُؤَدَّب","well-mannered","","","اِبْنُكَ وَلَدٌ مُؤَدَّبٌ.","Your son is a well-mannered boy."],
     ["a","مُطِيع","obedient","","","كَانَ مُطِيعًا لِوَالِدَيْهِ.","He was obedient to his parents."],
     ["a","صَالِح","righteous","","","نَدْعُو اللَّهَ أَنْ يَرْزُقَنَا ذُرِّيَّةً صَالِحَةً.","We ask God to grant us righteous children."],
     ["a","بَارّ","dutiful (to parents)","","","هُوَ ابْنٌ بَارٌّ بِأُمِّهِ.","He is a son who is dutiful to his mother."],
@@ -737,7 +737,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     ["v","كَافَأَ","to reward","يُكَافِئُ","مُكَافَأَةٌ","كَافَأَتِ الْمُعَلِّمَةُ الطُّلَّابَ الْمُجْتَهِدِينَ.","The teacher rewarded the hard-working students."],
     ["v","عَاقَبَ","to punish","يُعَاقِبُ","مُعَاقَبَةٌ","لَمْ يُعَاقِبْهُ، بَلْ تَحَدَّثَ مَعَهُ.","He did not punish him; instead he talked with him."],
     ["v","أَطَاعَ","to obey","يُطِيعُ","طَاعَةٌ","أَطَاعَ الْوَلَدُ أَبَاهُ.","The boy obeyed his father."],
-    ["v","اِحْتَضَنَ","to hug / embrace","يَحْتَضِنُ","اِحْتِضَانٌ","احْتَضَنَتِ الْأُمُّ طِفْلَهَا.","The mother hugged her child."],
+    ["v","اِحْتَضَنَ","to hug / embrace","يَحْتَضِنُ","اِحْتِضَانٌ","اِحْتَضَنَتِ الْأُمُّ طِفْلَهَا.","The mother hugged her child."],
     ["v","عَلَّمَ","to teach","يُعَلِّمُ","تَعْلِيمٌ","عَلَّمَنَا جَدِّي الصَّلَاةَ.","My grandfather taught us the prayer."],
     ["v","تَعَلَّمَ","to learn","يَتَعَلَّمُ","تَعَلُّمٌ","يَتَعَلَّمُ الْأَطْفَالُ مِنْ أَفْعَالِنَا أَكْثَرَ مِنْ أَقْوَالِنَا.","Children learn from our actions more than our words."],
     ["v","اِقْتَدَى","to follow an example","يَقْتَدِي","اِقْتِدَاءٌ","نَقْتَدِي بِالنَّبِيِّ فِي أَخْلَاقِهِ.","We follow the Prophet's example in his character."],

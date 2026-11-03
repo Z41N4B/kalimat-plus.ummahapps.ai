@@ -12,8 +12,8 @@
 <meta name="apple-mobile-web-app-title" content="Kalimat Plus">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#EDF0F1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#16191B" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1E4FA0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D1424" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://kalimat-plus.ummahapps.ai/">
 <link rel="alternate" hreflang="en" href="https://kalimat-plus.ummahapps.ai/">
 <link rel="alternate" hreflang="x-default" href="https://kalimat-plus.ummahapps.ai/">
@@ -110,27 +110,28 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: same graphite paper as Kalimat Plus, no sketches; topic chips, type and search filters above a grid of word cards that open into forms, plural and example. */
+/* Layout: no sketches; topic chips, type and search filters above a grid of word cards that open into forms, plural and example.
+   Colours and font match the other Ummah Apps Arabic apps (Takallum, Takallum Kids, Kalimat). */
 :root{
-  --paper:#EDF0F1;--card:#FBFCFC;--ink:#2B2F33;--ink-2:#5B646B;--line:#C6CED2;
-  --accent:#2C6E9B;--accent-soft:#DCEAF3;--on-accent:#FFFFFF;--ok:#2B7A52;--bad:#A8472F;
+  --paper:#EDF1F6;--card:#FFFFFF;--ink:#15233F;--ink-2:#56637D;--line:#D3DBE6;
+  --accent:#1E4FA0;--accent-soft:#DCE6F7;--on-accent:#FFFFFF;--ok:#1F6B4A;--bad:#A8382C;
   --h1:#3B66A8;--h2:#B8512A;--h3:#2A7F72;--h4:#8E4A8C;--h5:#94690F;--h6:#A63D62;
   --font-ar:'Amiri','Noto Naskh Arabic',serif;
-  --font-ui:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-ui:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#16191B;--card:#1F2326;--ink:#E4E7E4;--ink-2:#9AA3A8;--line:#394044;
-    --accent:#7DB7DC;--accent-soft:#24323B;--on-accent:#0F1C24;--ok:#6CC495;--bad:#E58B73;
+    --paper:#0D1424;--card:#162035;--ink:#E6EBF4;--ink-2:#9AA6BD;--line:#2A3753;
+    --accent:#8DB0EC;--accent-soft:#1D2D4D;--on-accent:#0D1424;--ok:#5FC498;--bad:#F08A7E;
     --h1:#8DB4EB;--h2:#F0A07F;--h3:#6FCBB9;--h4:#D79BD4;--h5:#E0BA6A;--h6:#EE93B3;color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#16191B;--card:#1F2326;--ink:#E4E7E4;--ink-2:#9AA3A8;--line:#394044;
-  --accent:#7DB7DC;--accent-soft:#24323B;--on-accent:#0F1C24;--ok:#6CC495;--bad:#E58B73;
+  --paper:#0D1424;--card:#162035;--ink:#E6EBF4;--ink-2:#9AA6BD;--line:#2A3753;
+  --accent:#8DB0EC;--accent-soft:#1D2D4D;--on-accent:#0D1424;--ok:#5FC498;--bad:#F08A7E;
   --h1:#8DB4EB;--h2:#F0A07F;--h3:#6FCBB9;--h4:#D79BD4;--h5:#E0BA6A;--h6:#EE93B3;color-scheme:dark;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -142,9 +143,14 @@ img{max-width:100%}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .top h1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0;font:inherit}
-.brand-ar{font-family:var(--font-ar);font-size:2.6rem;font-weight:700;line-height:1.2}
+.brand-ar{font-family:var(--font-ar);font-size:2.6rem;font-weight:700;line-height:1.2;color:var(--accent)}
 .brand-en{font-size:.8rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
 .tag{margin:0;color:var(--ink-2);flex-basis:100%}
+.who{display:flex;flex-wrap:wrap;align-items:center;gap:8px;flex-basis:100%;margin-top:4px}
+.who .label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
+.who-form{display:flex;flex-wrap:wrap;gap:8px;flex-basis:100%}
+.who-form input{flex:1 1 160px;width:auto}
+.linkbtn{font:inherit;font-size:.85rem;font-weight:700;min-height:38px;padding:4px 6px;border:0;background:none;color:var(--accent);text-decoration:underline;cursor:pointer}
 .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:20px}
 .tab{font:inherit;font-weight:800;font-size:.9rem;line-height:1.2;min-height:44px;padding:8px 6px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer}
 .tab[aria-current="page"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
@@ -256,6 +262,21 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .en-k{font-size:1.4rem;font-weight:800}
 .duebox{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:0 0 16px;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:14px;font-weight:700}
 .duebox[hidden]{display:none}
+/* Ummah Apps family strip: the same in all four apps */
+.ua-fam{--f-card:#FFFFFF;--f-ink:#15233F;--f-muted:#56637D;--f-line:#D3DBE6;--f-lapis:#1E4FA0;--f-soft:#DCE6F7;margin:24px 0 0;padding-top:20px;border-top:1px solid var(--f-line)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ua-fam{--f-card:#162035;--f-ink:#E6EBF4;--f-muted:#9AA6BD;--f-line:#2A3753;--f-lapis:#8DB0EC;--f-soft:#1D2D4D}}
+:root[data-theme="dark"] .ua-fam{--f-card:#162035;--f-ink:#E6EBF4;--f-muted:#9AA6BD;--f-line:#2A3753;--f-lapis:#8DB0EC;--f-soft:#1D2D4D}
+.ua-fam h2{font-size:1.05rem;margin:0 0 10px;padding:0;border:0;color:var(--f-ink)}
+.ua-fam ul{list-style:none;margin:0 0 10px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.ua-fam li{margin:0}
+.ua-app{display:grid;grid-template-columns:auto 1fr;gap:0 12px;align-items:center;height:100%;padding:10px 14px;border:1px solid var(--f-line);border-radius:16px;background:var(--f-card);color:var(--f-ink);text-decoration:none;line-height:1.35}
+a.ua-app:hover{border-color:var(--f-lapis)}
+.ua-app .ua-ar{grid-row:1 / span 2;font-family:"Amiri",serif;font-size:1.6rem;font-weight:700;line-height:1.3;color:var(--f-lapis)}
+.ua-app b{font-weight:700;font-size:.98rem}
+.ua-app small{grid-column:2;color:var(--f-muted);font-size:.84rem}
+.ua-app.here{background:var(--f-soft);border-color:transparent}
+.ua-app.here b::after{content:" · you are here";font-weight:400;color:var(--f-muted)}
+.ua-fam p{margin:0;color:var(--f-muted);font-size:.84rem}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);width:max-content;max-width:min(92vw,420px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:22px;font-weight:700;font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:20;text-align:center}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 @media (max-width:640px){.row3{grid-template-columns:1fr 1fr}.row3 input{grid-column:1/-1}}
@@ -270,6 +291,12 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     <h1><span class="brand-ar" lang="ar" dir="rtl">كَلِمَات</span>
     <span class="brand-en">Kalimat Plus</span></h1>
     <p class="tag">Fusha vocabulary for deeper topics, with a computer voice. Looking for discussion phrases like <span lang="ar" dir="rtl">فِي رَأْيِي</span>? They have moved to <a href="https://takallum.ummahapps.ai/">Takallum</a>, where you practise saying them.</p>
+    <div class="who" id="who" role="group" aria-label="Learner"></div>
+    <form class="who-form" id="who-form" hidden autocomplete="off">
+      <input type="text" id="who-name" maxlength="20" placeholder="Learner's name" aria-label="Learner's name">
+      <button class="btn small primary" type="submit">Save</button>
+      <button class="btn small" type="button" id="who-cancel">Cancel</button>
+    </form>
   </header>
 
   <nav class="tabs" aria-label="Sections">
@@ -283,6 +310,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     <section id="view-words" aria-labelledby="h-words">
       <h2 id="h-words">Tap a word to hear it</h2>
       <p class="lead">Each word has its forms or plural and an example sentence. Tap Mark as learned to add a word to the game. Get it right 5 times in a row in the game and it moves to Known well by itself, or tap Known well yourself. Known well words come back now and then for a memory check.</p>
+      <div class="duebox" id="ua-note" hidden><span id="ua-text"></span><span><button class="btn small primary" id="ua-add" type="button">Mark them as learned</button> <button class="linkbtn" id="ua-hide" type="button">Not now</button></span></div>
       <div class="voice-row">
         <label for="voice-sel">Voice</label>
         <select id="voice-sel" aria-label="Voice"></select>
@@ -432,8 +460,21 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
       <ul class="rows" id="mine-list"></ul>
     </section>
   </main>
+  <footer>
+    <nav class="ua-fam" aria-labelledby="ua-fam-h">
+      <h2 id="ua-fam-h">Four free Arabic apps that work together</h2>
+      <ul>
+        <li><a class="ua-app" href="https://takallum-kids.ummahapps.ai/"><span class="ua-ar" lang="ar" dir="rtl">تَكَلُّم</span><b>Takallum Kids</b><small>Ages 4 to 11: first words and short sentences to say out loud</small></a></li>
+        <li><a class="ua-app" href="https://kalimat.ummahapps.ai/"><span class="ua-ar" lang="ar" dir="rtl">كَلِمَات</span><b>Kalimat</b><small>Beginners: over 400 everyday words and Qur’an words, with pictures and games</small></a></li>
+        <li><span class="ua-app here" aria-current="page"><span class="ua-ar" lang="ar" dir="rtl">كَلِمَات</span><b>Kalimat Plus</b><small>Next step: words for worship, tarbiyyah, character and the environment</small></span></li>
+        <li><a class="ua-app" href="https://takallum.ummahapps.ai/"><span class="ua-ar" lang="ar" dir="rtl">تَكَلُّم</span><b>Takallum</b><small>Speaking drills, sentence chains and role-plays for older learners</small></a></li>
+      </ul>
+      <p>On the same device, the four apps share their learners and the words each learner knows.</p>
+    </nav>
+  </footer>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
+<script src="ummah.js"></script>
 
 <script>
 (function(){
@@ -806,31 +847,71 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   function lsGet(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
   function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
-  var learned=lsGet("kpp-learned",{});
-  var known=lsGet("kpp-known",{});
-  var streak=lsGet("kpp-streak",{});
-  var review=lsGet("kpp-review",{});
+  // Up to 3 learners share a device, the same learners as in the other Ummah Apps (ummah.js).
+  // Learner p1 keeps the original storage keys so earlier progress carries over.
+  var MAXP=3;
+  var profiles=lsGet("kpp-profiles",null);
+  if(!profiles||!profiles.list||!profiles.list.length)profiles={list:[{id:"p1",name:"Learner 1"}],cur:"p1"};
+  if(window.UA){
+    var shared=UA.sync(profiles.list);
+    shared.extra.forEach(function(x){
+      if(profiles.list.length>=MAXP)return;
+      // A learner from another app takes over the first, untouched Learner 1 instead of sitting beside it
+      var blank=profiles.list.length===1&&profiles.list[0].id==="p1"&&!profiles.list[0].ua&&!lsGet("kpp-learned",null);
+      if(blank)profiles.list=[];
+      profiles.list.push({id:blank?"p1":"p"+Date.now().toString(36)+profiles.list.length,ua:x.ua,name:x.name,g:x.g,avatar:x.avatar});
+    });
+    profiles.list.forEach(function(p){if(p.ua&&p.ua===shared.cur)profiles.cur=p.id});
+    lsSet("kpp-profiles",profiles);
+  }
+  if(!profiles.list.some(function(p){return p.id===profiles.cur}))profiles.cur=profiles.list[0].id;
+  function K(n,id){id=id||profiles.cur;return id==="p1"?"kpp-"+n:"kpp-"+id+"-"+n}
+  var learned,known,streak,review,custom;
+  function loadProfile(){
+    learned=lsGet(K("learned"),{});
+    known=lsGet(K("known"),{});
+    streak=lsGet(K("streak"),{});
+    review=lsGet(K("review"),{});
+    custom=lsGet(K("custom"),[]).filter(function(w){return w&&w.id&&w.ar&&w.en});
+    custom.forEach(function(w){w.custom=true;w.t=w.t||"n";w.pl=w.pl||"";w.pt=w.pt||"";w.pres=w.pres||"";w.ms=w.ms||"";w.ex=w.ex||"";w.exen=w.exen||""});
+  }
+  loadProfile();
   var GOAL=5,GAPS=[3,7,14,30,60,120],DAY=864e5;
-  var custom=lsGet("kpp-custom",[]).filter(function(w){return w&&w.id&&w.ar&&w.en});
-  custom.forEach(function(w){w.custom=true;w.t=w.t||"n";w.pl=w.pl||"";w.pt=w.pt||"";w.pres=w.pres||"";w.ms=w.ms||"";w.ex=w.ex||"";w.exen=w.exen||""});
   var voice=lsGet("kpp-voice",{name:"",rate:0.85});
   // In-app browsers (WhatsApp, Instagram, Facebook and similar) often have no speech at all
   var inApp=/FBAN|FBAV|Instagram|WhatsApp|Snapchat|TikTok|Line\/|; wv\)/i.test(navigator.userAgent||"");
   var filter={cat:"all",type:"",show:"all",q:""};
 
-  function schedule(id,step){step=Math.min(step,GAPS.length-1);review[id]={s:step,due:Date.now()+GAPS[step]*DAY};lsSet("kpp-review",review)}
-  function makeKnown(id){known[id]=1;delete streak[id];lsSet("kpp-known",known);lsSet("kpp-streak",streak);schedule(id,0)}
-  function unKnow(id){delete known[id];delete review[id];delete streak[id];lsSet("kpp-known",known);lsSet("kpp-review",review);lsSet("kpp-streak",streak)}
-  function forget(id){delete learned[id];unKnow(id);lsSet("kpp-learned",learned)}
+  function schedule(id,step){step=Math.min(step,GAPS.length-1);review[id]={s:step,due:Date.now()+GAPS[step]*DAY};lsSet(K("review"),review)}
+  function makeKnown(id){known[id]=1;shareKnown([id]);delete streak[id];lsSet(K("known"),known);lsSet(K("streak"),streak);schedule(id,0)}
+  function unKnow(id){delete known[id];delete review[id];delete streak[id];lsSet(K("known"),known);lsSet(K("review"),review);lsSet(K("streak"),streak)}
+  function forget(id){delete learned[id];unKnow(id);lsSet(K("learned"),learned)}
   function tally(id,ok){
-    if(!ok){if(streak[id]){delete streak[id];lsSet("kpp-streak",streak)}return 0}
+    if(!ok){if(streak[id]){delete streak[id];lsSet(K("streak"),streak)}return 0}
     var n=(streak[id]||0)+1;
     if(n>=GOAL){makeKnown(id);return -1}
-    streak[id]=n;lsSet("kpp-streak",streak);return n;
+    streak[id]=n;lsSet(K("streak"),streak);return n;
   }
   function dueList(){var now=Date.now();return allWords().filter(function(w){return known[w.id]&&(!review[w.id]||review[w.id].due<=now)})}
   function allWords(){return BUILTIN.concat(custom)}
   function byId(id){return allWords().filter(function(w){return w.id===id})[0]}
+  function curProfile(){return profiles.list.filter(function(p){return p.id===profiles.cur})[0]}
+  // Known well words go into the shared word bank (ummah.js), so the other apps can show them as known
+  function shareKnown(ids){
+    var p=curProfile();if(!window.UA||!p||!p.ua)return;
+    UA.addKnown(p.ua,(ids||Object.keys(known)).map(byId).filter(Boolean).map(function(w){return w.ar}));
+  }
+  // Words this learner knows from the other apps but has not started here
+  function fromApps(){
+    var p=curProfile();if(!window.UA||!p||!p.ua)return [];
+    var knows=UA.knows(p.ua);
+    return BUILTIN.filter(function(w){return !learned[w.id]&&knows(w.ar)});
+  }
+  function renderFromApps(){
+    var n=fromApps().length;
+    $("#ua-note").hidden=!n||n<=lsGet(K("ua-hide"),0);
+    $("#ua-text").textContent="You already know "+(n===1?"1 word":n+" words")+" here from the other Ummah Apps.";
+  }
   function inCat(w,c){return c==="all"||(c==="mine"?!!w.custom:w.cat===c)}
   function catName(k){for(var i=0;i<CATS.length;i++)if(CATS[i][0]===k)return CATS[i][1];return "My words"}
 
@@ -941,8 +1022,14 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
         (learned[w.id]?'<button class="learn kw'+(known[w.id]?' on':'')+'" type="button" data-known="'+esc(w.id)+'" aria-pressed="'+(known[w.id]?'true':'false')+'" aria-label="'+esc(w.en)+': known well">'+(known[w.id]?ICON.check+'Known well':'Known well')+'</button>':'')+
       '</div>';
     }).join(""):'<p class="lead">No words match. Try another topic or clear the search.</p>';
-    renderCount();
+    renderCount();renderFromApps();
   }
+  $("#ua-add").addEventListener("click",function(){
+    var list=fromApps();list.forEach(function(w){learned[w.id]=1});
+    lsSet(K("learned"),learned);Q.last=null;renderWords();
+    toast("Marked "+list.length+(list.length===1?" word":" words")+" as learned.");
+  });
+  $("#ua-hide").addEventListener("click",function(){lsSet(K("ua-hide"),fromApps().length);renderFromApps()});
   function fullText(w){return w.t==="v"&&w.pres?w.ar+"، "+w.pres+(w.ms?"، "+w.ms:""):w.ar}
 
   $("#chips").addEventListener("click",function(e){
@@ -965,7 +1052,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     var l=e.target.closest("[data-learn]");
     if(l){
       var id=l.dataset.learn;
-      if(learned[id])forget(id);else{learned[id]=1;lsSet("kpp-learned",learned)}
+      if(learned[id])forget(id);else{learned[id]=1;lsSet(K("learned"),learned)}
       Q.last=null;renderWords();return;
     }
     var ex=e.target.closest("[data-ex]");
@@ -1308,7 +1395,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
     err.hidden=true;
     var w={id:"c"+Date.now().toString(36)+Math.floor(Math.random()*1000),ar:ar,en:en,cat:cat,t:t,custom:true,
       pl:t==="n"?pl:"",pt:t==="n"&&pl?$("#add-pt").value:"",pres:t==="v"?pres:"",ms:t==="v"?ms:"",ex:ex,exen:exen};
-    custom.push(w);lsSet("kpp-custom",custom);
+    custom.push(w);lsSet(K("custom"),custom);
     ["#add-ar","#add-en","#add-pl","#add-pres","#add-ms","#add-ex","#add-exen"].forEach(function(s){$(s).value=""});
     renderMine();renderWords();
     toast("Added "+en+".");
@@ -1324,7 +1411,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
         setTimeout(function(){if(b.isConnected){b.dataset.arm="";b.querySelector("span").textContent="Remove"}},3000);
       }else{
         custom=custom.filter(function(x){return x.id!==id});forget(id);
-        lsSet("kpp-custom",custom);
+        lsSet(K("custom"),custom);
         renderMine();renderWords();toast("Removed.");
       }
     }
@@ -1341,7 +1428,76 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
   }
   tabs.forEach(function(t){t.addEventListener("click",function(){show(t.dataset.tab)})});
 
-  renderChips();renderWords();renderAddCats();renderMine();paintRate();syncAddType();
+  // Learners: the same chips as Kalimat
+  var whoMode="";
+  function saveProfiles(){lsSet("kpp-profiles",profiles)}
+  function renderWho(){
+    var html='<span class="label">Learner</span>'+profiles.list.map(function(p){
+      return '<button class="chip-btn" type="button" data-pid="'+esc(p.id)+'" aria-pressed="'+(p.id===profiles.cur)+'">'+(p.avatar?'<span aria-hidden="true">'+esc(p.avatar)+'</span> ':'')+esc(p.name)+'</button>';
+    }).join("");
+    if(profiles.list.length<MAXP)html+='<button class="chip-btn" type="button" data-who="add">+ Add learner</button>';
+    html+='<button class="linkbtn" type="button" data-who="rename">Rename</button>';
+    if(profiles.list.length>1)html+='<button class="linkbtn" type="button" data-who="remove">Remove</button>';
+    $("#who").innerHTML=html;
+  }
+  function refreshAll(){
+    if(C.cur)endCheck();
+    Q.right=0;Q.total=0;Q.last=null;R.queue=[];R.cur=null;
+    if(window.UA){UA.setCurrent(curProfile().ua);shareKnown()}
+    filter.cat="all";renderChips();renderWho();renderWords();renderMine();renderDue();
+    if(!$("#view-known").hidden)renderKnown();
+    if(!$("#view-quiz").hidden)newQ();
+  }
+  function openWhoForm(mode){
+    whoMode=mode;
+    $("#who-name").value=mode==="rename"?curProfile().name:"";
+    $("#who-form").hidden=false;$("#who-name").focus();
+  }
+  $("#who").addEventListener("click",function(e){
+    var p=e.target.closest("[data-pid]");
+    if(p){
+      if(p.dataset.pid===profiles.cur)return;
+      stopSpeech();profiles.cur=p.dataset.pid;saveProfiles();loadProfile();refreshAll();
+      toast("Now learning as "+curProfile().name+".");
+      return;
+    }
+    var b=e.target.closest("[data-who]");if(!b)return;
+    var act=b.dataset.who;
+    if(act==="add"||act==="rename"){openWhoForm(act);return}
+    if(act==="remove"){
+      if(b.dataset.arm!=="1"){
+        b.dataset.arm="1";b.textContent="Tap again to remove "+curProfile().name;
+        setTimeout(function(){if(b.isConnected){b.dataset.arm="";b.textContent="Remove"}},3000);
+        return;
+      }
+      var gone=curProfile();
+      if(window.UA)UA.remove(gone.ua);
+      ["learned","known","streak","review","custom","ua-hide"].forEach(function(n){try{localStorage.removeItem(K(n,gone.id))}catch(err){}});
+      profiles.list=profiles.list.filter(function(x){return x.id!==gone.id});
+      profiles.cur=profiles.list[0].id;saveProfiles();loadProfile();refreshAll();
+      toast("Removed "+gone.name+".");
+    }
+  });
+  $("#who-form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var name=$("#who-name").value.trim().slice(0,20);
+    if(!name){$("#who-name").focus();return}
+    if(whoMode==="add"){
+      if(profiles.list.length>=MAXP)return;
+      var np={id:"p"+Date.now().toString(36),name:name};if(window.UA)np.ua=UA.save(np);
+      profiles.list.push(np);profiles.cur=np.id;
+      saveProfiles();loadProfile();refreshAll();
+      toast("Added "+name+".");
+    }else{
+      curProfile().name=name;if(window.UA){curProfile().ua=UA.save(curProfile());UA.setCurrent(curProfile().ua)}
+      saveProfiles();renderWho();renderFromApps();
+    }
+    $("#who-form").hidden=true;
+  });
+  $("#who-cancel").addEventListener("click",function(){$("#who-form").hidden=true});
+
+  if(window.UA){UA.setCurrent(curProfile().ua);shareKnown()}
+  renderWho();renderChips();renderWords();renderAddCats();renderMine();paintRate();syncAddType();
   if("speechSynthesis" in window){
     refreshVoices();
     if(speechSynthesis.addEventListener)speechSynthesis.addEventListener("voiceschanged",refreshVoices);else speechSynthesis.onvoiceschanged=refreshVoices;

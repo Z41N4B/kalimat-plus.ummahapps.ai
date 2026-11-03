@@ -15,6 +15,7 @@
 - Games: a multiple-choice reading quiz, "say it from memory", "say the verb forms" and "say the plural".
 - Progress tracking: mark words as learned and they go into the game. Get a word right 5 times in a row and it moves to Known well by itself. Known-well words come back for spaced memory checks (after 3 days, 1 week, 2 weeks, 1 month, 2 months, 4 months); a forgotten word goes back into the game.
 - Learners can add their own words with plurals, verb forms and example sentences.
+- Up to three learners can share one device, the same learners as in the sister apps Takallum Kids, Kalimat and Takallum.
 - Free, no account, no ads. Progress is stored only in the learner's browser.
 
 ## Who it is for

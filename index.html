@@ -980,10 +980,12 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     try{var s=window.speechSynthesis;if(s&&(s.speaking||s.pending))s.cancel()}catch(e){}
     document.querySelectorAll(".playing").forEach(function(e){e.classList.remove("playing")});
   }
+  // Some voices misread a word; only what is spoken changes, never what is shown. Android says جَدِّي with tanween, so it gets a sukun on the ya.
+  var SAY=[[/جَدِّي/g,"جَدِّيْ"]];
   function speak(text,el){
     if(!("speechSynthesis" in window)){toast("This browser cannot speak. Open the site in Chrome or Safari.",6000);return}
     stopSpeech();
-    var u=new SpeechSynthesisUtterance(text);
+    var u=new SpeechSynthesisUtterance(SAY.reduce(function(t,r){return t.replace(r[0],r[1])},text));
     var vs=[];try{vs=speechSynthesis.getVoices()||[]}catch(e){}
     var v=vs.filter(function(x){return x.name===voice.name})[0];
     if(v){u.voice=v;u.lang=v.lang}else{u.lang="ar-SA"}

@@ -1183,14 +1183,32 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     var a=b.dataset.vg;
     if(a==="dev"){vg.dev=b.dataset.dev;renderVG();$('#vg [data-dev="'+vg.dev+'"]').focus()}
     else if(a==="test")speak("مَرْحَبًا، كَيْفَ حَالُكَ؟",b);
-    else{vg.hidden=a==="hide";lsSet("kpp-vg-hidden",vg.hidden);renderVG();$(vg.hidden?"#vg .vg-show":'#vg [data-vg="hide"]').focus()}
+    else{vg.hidden=a==="hide";lsSet("kpp-vg-hidden",vg.hidden);shareSet("voiceHelp",!vg.hidden);renderVG();$(vg.hidden?"#vg .vg-show":'#vg [data-vg="hide"]').focus()}
   });
   renderVG();
   $("#rate-seg").addEventListener("click",function(e){
     var b=e.target.closest("button[data-rate]");if(!b)return;
-    voice.rate=parseFloat(b.dataset.rate);lsSet("kpp-voice",voice);paintRate();
+    voice.rate=parseFloat(b.dataset.rate);lsSet("kpp-voice",voice);paintRate();shareSet("speed",speedOf(voice.rate));
   });
   function paintRate(){document.querySelectorAll("#rate-seg button").forEach(function(b){b.setAttribute("aria-pressed",String(parseFloat(b.dataset.rate)===voice.rate))})}
+
+  // Speed and voice help go with each learner in all four Ummah Apps Arabic apps (ummah.js), set here or in the shared Settings
+  var RATES={slow:0.65,normal:0.85,natural:1};
+  function speedOf(r){return r<=0.7?"slow":r>=0.95?"natural":"normal"}
+  function shareSet(k,v){var p=curProfile();if(window.UA)UA.setSetting(p&&p.ua,k,v)}
+  function applySettings(s){
+    voice.rate=RATES[s.speed]||0.85;lsSet("kpp-voice",voice);paintRate();
+    if(vg.hidden!==!s.voiceHelp){vg.hidden=!s.voiceHelp;lsSet("kpp-vg-hidden",vg.hidden);renderVG()}
+  }
+  // The first time, what was chosen here before settings were shared fills in each learner's shared settings; new learners start from the defaults
+  function loadSettings(){
+    if(!window.UA)return;
+    if(!lsGet("kpp-shared",false)){
+      var mine={};if(lsGet("kpp-voice",null))mine.speed=speedOf(voice.rate);if(lsGet("kpp-vg-hidden",null)!==null)mine.voiceHelp=!vg.hidden;
+      UA.settings(null,mine);profiles.list.forEach(function(p){UA.settings(p.ua,mine)});lsSet("kpp-shared",true);
+    }
+    applySettings(UA.settings(curProfile().ua));
+  }
 
   var Q={mode:"read",target:null,opts:[],last:null,locked:false,answered:false,right:0,total:0};
   function quizPool(){return allWords().filter(function(w){return learned[w.id]&&!known[w.id]})}
@@ -1509,12 +1527,13 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     if(profiles.list.length<MAXP)html+='<button class="chip-btn" type="button" data-who="add">+ Add learner</button>';
     html+='<button class="linkbtn" type="button" data-who="rename">Rename</button>';
     if(profiles.list.length>1)html+='<button class="linkbtn" type="button" data-who="remove">Remove</button>';
+    if(window.UA)html+='<button class="linkbtn" type="button" data-who="settings">Settings</button>';
     $("#who").innerHTML=html;
   }
   function refreshAll(){
     if(C.cur)endCheck();
     Q.right=0;Q.total=0;Q.last=null;R.queue=[];R.cur=null;
-    if(window.UA){UA.setCurrent(curProfile().ua);shareKnown()}
+    if(window.UA){UA.setCurrent(curProfile().ua);shareKnown();loadSettings()}
     filter.cat="all";renderChips();renderWho();renderWords();renderMine();renderDue();
     if(!$("#view-known").hidden)renderKnown();
     if(!$("#view-quiz").hidden)newQ();
@@ -1534,6 +1553,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     }
     var b=e.target.closest("[data-who]");if(!b)return;
     var act=b.dataset.who;
+    if(act==="settings"){UA.openSettings({ua:curProfile().ua,name:curProfile().name,app:"kalimat-plus",onChange:applySettings});return}
     if(act==="add"||act==="rename"){openWhoForm(act);return}
     if(act==="remove"){
       if(b.dataset.arm!=="1"){
@@ -1569,6 +1589,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
 
   if(window.UA){UA.setCurrent(curProfile().ua);shareKnown()}
   renderWho();renderChips();renderWords();renderAddCats();renderMine();paintRate();syncAddType();
+  loadSettings();if(window.UA)UA.watch(function(){return curProfile().ua},applySettings);
   if("speechSynthesis" in window){
     refreshVoices();
     if(speechSynthesis.addEventListener)speechSynthesis.addEventListener("voiceschanged",refreshVoices);else speechSynthesis.onvoiceschanged=refreshVoices;

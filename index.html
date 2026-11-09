@@ -319,6 +319,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       <button class="btn small" type="button" id="who-cancel">Cancel</button>
     </form>
   </header>
+  <section id="ua-today" aria-label="Today's practice" hidden></section>
 
   <nav class="tabs" aria-label="Sections">
     <button class="tab" data-tab="words" aria-current="page">Words</button>
@@ -927,6 +928,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   function unKnow(id){delete known[id];delete review[id];delete streak[id];lsSet(K("known"),known);lsSet(K("review"),review);lsSet(K("streak"),streak)}
   function forget(id){delete learned[id];unKnow(id);lsSet(K("learned"),learned)}
   function tally(id,ok){
+    if(learned[id]&&!known[id])addPractice({c:1});
     if(!ok){if(streak[id]){delete streak[id];lsSet(K("streak"),streak)}return 0}
     var n=(streak[id]||0)+1;
     if(n>=GOAL){makeKnown(id);return -1}
@@ -1044,6 +1046,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     $("#count").textContent=n+" of "+all.length+" words learned · "+k+" known well"+(d?" · "+d+" due for a memory check":"");
   }
   function renderWords(){
+    if(window.UA)UA.refreshToday();
     var list=visible();
     $("#grid").innerHTML=list.length?list.map(function(w){
       var long=w.ar.length>14?" long":"";
@@ -1123,7 +1126,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     var l=e.target.closest("[data-learn]");
     if(l){
       var id=l.dataset.learn;
-      if(learned[id])forget(id);else{learned[id]=1;lsSet(K("learned"),learned)}
+      if(learned[id])forget(id);else{learned[id]=1;lsSet(K("learned"),learned);addPractice({n:1})}
       Q.last=null;renderWords();return;
     }
     var ex=e.target.closest("[data-ex]");
@@ -1438,6 +1441,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     if(C.stage!=="reveal")return;
     C.stage="done";
     var id=C.cur;
+    addPractice({v:1});
     if(ok){tone(true);C.kept++;schedule(id,((review[id]||{}).s||0)+1)}
     else{tone(false);C.lost++;unKnow(id);Q.last=null}
     setTimeout(function(){if(!$("#k-check").hidden)nextCheckWord()},ok?700:900);
@@ -1521,6 +1525,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   var whoMode="";
   function saveProfiles(){lsSet("kpp-profiles",profiles)}
   function renderWho(){
+    if(window.UA)UA.refreshToday();
     var html='<span class="label">Learner</span>'+profiles.list.map(function(p){
       return '<button class="chip-btn" type="button" data-pid="'+esc(p.id)+'" aria-pressed="'+(p.id===profiles.cur)+'">'+(p.avatar?'<span aria-hidden="true">'+esc(p.avatar)+'</span> ':'')+esc(p.name)+'</button>';
     }).join("");
@@ -1590,6 +1595,26 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   if(window.UA){UA.setCurrent(curProfile().ua);shareKnown()}
   renderWho();renderChips();renderWords();renderAddCats();renderMine();paintRate();syncAddType();
   loadSettings();if(window.UA)UA.watch(function(){return curProfile().ua},applySettings);
+  // Today's practice across the four apps (ummah.js): memory checks due, Learning words to strengthen, new words started
+  function addPractice(x){if(window.UA)UA.practiceAdd(curProfile().ua,"kalimat-plus",x)}
+  function practiceState(){
+    var t=UA.dayNo(),o=[dueList().length,0,0,0,0,0,0],r=0;
+    allWords().forEach(function(w){
+      if(known[w.id]){
+        var v=review[w.id],d=v&&v.due?new Date(v.due):null,day=d?Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5):0;
+        for(var i=1;i<7;i++)if(day<=t+i)o[i]++;
+      }else if(learned[w.id])r++;
+    });
+    for(var i=1;i<7;i++)o[i]=Math.max(o[i],o[i-1]);
+    return {o:o,r:r};
+  }
+  function startStep(step){
+    show(step==="old"?"known":step==="new"?"words":"quiz");
+    if(step==="old")startCheck();
+    if(step==="new")toast("Tap Learning on a few new words to start them.");
+    $(".tabs").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  if(window.UA)UA.mountToday($("#ua-today"),{app:"kalimat-plus",ua:function(){return curProfile().ua},name:function(){return curProfile().name},state:practiceState,start:startStep,onSettings:applySettings});
   if("speechSynthesis" in window){
     refreshVoices();
     if(speechSynthesis.addEventListener)speechSynthesis.addEventListener("voiceschanged",refreshVoices);else speechSynthesis.onvoiceschanged=refreshVoices;

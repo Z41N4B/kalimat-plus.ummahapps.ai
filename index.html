@@ -179,6 +179,7 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .chip-btn[data-cat][aria-pressed="true"]::before{background:var(--on-accent)}
 .note{padding:10px 14px;border:1.5px solid var(--bad);border-radius:12px;color:var(--bad);margin:0 0 14px;font-weight:700}
 .count{font-weight:800;margin:0 0 12px}
+.know-all{margin:-6px 0 14px;font-size:.92rem;color:var(--ink-2)}
 .prog{margin:0 0 18px;padding:12px 14px;background:var(--card);border:1.5px solid var(--line);border-radius:16px}
 .prog p{margin:0}
 .prog-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
@@ -374,6 +375,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       <label class="check" for="show-ex"><input type="checkbox" id="show-ex"> Show example sentences on every card</label>
       <label class="check" for="show-notes"><input type="checkbox" id="show-notes"> Show notes on every card</label>
       <p class="count" id="count"></p>
+      <p class="know-all" id="know-all" hidden></p>
       <div class="grid" id="grid"><noscript><p class="lead">Kalimat Plus needs JavaScript to show the words, play audio and run the games. Please turn JavaScript on.</p></noscript></div>
     </section>
 
@@ -895,6 +897,11 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   if(!profiles||!profiles.list||!profiles.list.length)profiles={list:[{id:"p1",name:"Learner 1"}],cur:"p1"};
   if(window.UA){
     var shared=UA.sync(profiles.list);
+    // A learner removed in another of the apps is removed here too, with their progress
+    var goneIds=shared.removed.map(function(i){return profiles.list[i].id});
+    goneIds.forEach(dropData);
+    profiles.list=profiles.list.filter(function(p){return goneIds.indexOf(p.id)<0});
+    if(!profiles.list.length)profiles={list:[{id:"p1",name:"Learner 1"}],cur:"p1"};
     shared.extra.forEach(function(x){
       if(profiles.list.length>=MAXP)return;
       // A learner from another app takes over the first, untouched Learner 1 instead of sitting beside it
@@ -907,6 +914,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   }
   if(!profiles.list.some(function(p){return p.id===profiles.cur}))profiles.cur=profiles.list[0].id;
   function K(n,id){id=id||profiles.cur;return id==="p1"?"kpp-"+n:"kpp-"+id+"-"+n}
+  function dropData(id){["learned","known","streak","review","custom","ua-hide"].forEach(function(n){try{localStorage.removeItem(K(n,id))}catch(err){}})}
   var learned,known,streak,review,custom;
   function loadProfile(){
     learned=lsGet(K("learned"),{});
@@ -1040,6 +1048,14 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     });
   }
   function learnLabel(id){return learned[id]?ICON.check+"Learned":"Mark as learned"}
+  // Words a learner already knows can be marked Known well together, skipping the Learning stage. Their first checks
+  // are spread over the next month, so marking many at once does not bring a pile of checks on one day.
+  function knowAllList(){return visible().filter(function(w){return !known[w.id]})}
+  function renderKnowAll(){
+    var n=knowAllList().length,el=$("#know-all");
+    el.hidden=!n;
+    if(n)el.innerHTML='Already know '+(n===1?'this word':'these words')+'? <button class="linkbtn" type="button" id="know-all-btn">Mark '+(n===1?'it':'all '+n+' shown')+' as Known well</button>';
+  }
   function renderCount(){
     var all=allWords(),n=all.filter(function(w){return learned[w.id]}).length,k=all.filter(function(w){return known[w.id]}).length;
     var d=dueList().length;
@@ -1067,7 +1083,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
         (learned[w.id]?'<button class="learn kw'+(known[w.id]?' on':'')+'" type="button" data-known="'+esc(w.id)+'" aria-pressed="'+(known[w.id]?'true':'false')+'" aria-label="'+esc(w.en)+': known well">'+(known[w.id]?ICON.check+'Known well':'Known well')+'</button>':'')+
       '</div>';
     }).join(""):'<p class="lead">No words match. Try another topic or clear the search.</p>';
-    renderCount();renderFromApps();renderProgress();
+    renderCount();renderFromApps();renderProgress();renderKnowAll();
   }
   // How far this learner has come, the same way as Kalimat: a word counts once it is Known well. My words are mentioned but not in the totals.
   var MILESTONES=[5,10,25,50,75,100,150,200,250];
@@ -1425,6 +1441,16 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     $("#k-left").textContent=(C.queue.length+1)+" left";
   }
   $("#k-start").addEventListener("click",startCheck);
+  $("#know-all").addEventListener("click",function(e){
+    if(!e.target.closest("#know-all-btn"))return;
+    var list=knowAllList(),n=list.length;if(!n)return;
+    if(!confirm("Mark "+(n===1?"this word":n+" words")+" as Known well?\n\nThey skip the Learning stage and leave the game. Each one comes back now and then for a memory check, spread over the next month. To undo a word, tap Known well on its card."))return;
+    list.forEach(function(w,i){learned[w.id]=1;known[w.id]=1;delete streak[w.id];review[w.id]={s:1,due:Date.now()+(7+i%24)*DAY}});
+    lsSet(K("learned"),learned);lsSet(K("known"),known);lsSet(K("streak"),streak);lsSet(K("review"),review);Q.last=null;
+    shareKnown(list.map(function(w){return w.id}));
+    renderWords();
+    toast("Masha Allah! "+(n===1?"1 word":n+" words")+" marked as Known well.");
+  });
   $("#k-stop").addEventListener("click",endCheck);
   $("#q-due-go").addEventListener("click",function(){show("known");startCheck()});
   $("#k-show").addEventListener("click",function(){
@@ -1561,14 +1587,10 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     if(act==="settings"){UA.openSettings({ua:curProfile().ua,name:curProfile().name,app:"kalimat-plus",onChange:applySettings});return}
     if(act==="add"||act==="rename"){openWhoForm(act);return}
     if(act==="remove"){
-      if(b.dataset.arm!=="1"){
-        b.dataset.arm="1";b.textContent="Tap again to remove "+curProfile().name;
-        setTimeout(function(){if(b.isConnected){b.dataset.arm="";b.textContent="Remove"}},3000);
-        return;
-      }
       var gone=curProfile();
+      if(!(window.UA?UA.confirmRemove(gone.name,gone.ua):confirm("Remove "+gone.name+" and all their progress on this device? It cannot be undone.")))return;
       if(window.UA)UA.remove(gone.ua);
-      ["learned","known","streak","review","custom","ua-hide"].forEach(function(n){try{localStorage.removeItem(K(n,gone.id))}catch(err){}});
+      dropData(gone.id);
       profiles.list=profiles.list.filter(function(x){return x.id!==gone.id});
       profiles.cur=profiles.list[0].id;saveProfiles();loadProfile();refreshAll();
       toast("Removed "+gone.name+".");

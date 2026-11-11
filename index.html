@@ -1786,7 +1786,10 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       var q=L.q;if(q.picked!=null)return;
       q.picked=b.dataset.opt;var ok=q.picked===q.cur;
       tone(ok);if(ok)q.done++;else if(!q.miss[q.cur]){q.miss[q.cur]=1;q.queue.push(q.cur)}else q.done++;
-      renderLearn();return;
+      renderLearn();
+      // After a right answer the next check word comes by itself 2 seconds later
+      if(ok&&q.queue.length)(function(id){setTimeout(function(){if(L.stage==="check"&&L.q===q&&q.cur===id&&q.picked!=null&&!$("#view-learn").hidden)newCheck()},2000)})(q.cur);
+      return;
     }
     b=e.target.closest("[data-l]");if(!b)return;
     var a=b.dataset.l,w;

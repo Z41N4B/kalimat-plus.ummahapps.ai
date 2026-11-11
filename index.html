@@ -1296,7 +1296,11 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     if(Q.mode==="forms")pool=pool.filter(function(w){return w.t==="v"&&w.pres});
     return pool;
   }
+  // After a right answer the next question comes by itself, 2 seconds later, unless the learner has moved on
+  var autoT=0;
+  function autoNext(t){clearTimeout(autoT);autoT=setTimeout(function(){if(!$("#view-quiz").hidden&&Q.target===t&&Q.locked)newQ()},2000)}
   function newQ(){
+    clearTimeout(autoT);
     if(Q.goNext){var gn=Q.goNext;Q.goNext=null;pickMode(gn)}
     renderGoal();
     renderDue();
@@ -1362,7 +1366,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       tone(true);
       $("#q-msg").innerHTML='Yes! <span class="ar-s" lang="ar" dir="rtl">'+esc(Q.target.ar)+'</span> means '+esc(Q.target.en)+'. '+runText(Q.run);
       (function(t){setTimeout(function(){if(Q.target&&Q.target.id===t.id)speak(t.ar,null)},600)})(Q.target);
-      $("#q-next").hidden=false;$("#q-next").focus();
+      $("#q-next").hidden=false;$("#q-next").focus();autoNext(Q.target);
     }else{
       b.classList.remove("miss");void b.offsetWidth;b.classList.add("miss");
       var x=b.querySelector(".mark");x.className="mark no";x.innerHTML=ICON.cross;

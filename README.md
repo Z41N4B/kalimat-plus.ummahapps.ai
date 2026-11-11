@@ -38,3 +38,8 @@ Then open http://localhost:8765
 
 ## Already learnt
 Above the word cards, Mark all shown as Known well marks every word in the group, level or search on screen as Known well after a warning. They skip the Learning stage, and their first checks are spread over the next month.
+
+## Learn and the game goal
+The Learn tab (the first tab) gives the learner their next words instead of asking them to choose. They tick any number of groups and how many words at a time (5, 10 or 15), then tap Give me new words: the next words taken in turn from each ticked group, skipping words already learned, known or swapped out. Before starting they can Swap a word or say I know it (it goes to Known well, first memory check 7 to 30 days away). The words are then met one by one like flashcards, with sound, plural or present tense and the example sentence, followed by a quick check (pick the meaning; a miss comes back once), and become learned. Add all marks every word in the ticked groups as learned at once and shows them as flashcards. Go through them one by one runs the learned words as flashcards with the meaning hidden until tapped. The choices are kept per learner in `kpp-path`.
+
+The Game tab starts with Today’s goal: the Memory check when words are due, then Read it, Say it from memory, and Say the verb forms (or Say the plural), 10 answers each. The step to do next has a Play button, and finishing a step moves the game on to the next one. Counts are kept per learner per day in `kpp-goal`.

@@ -152,7 +152,8 @@ img{max-width:100%}
 .who-form{display:flex;flex-wrap:wrap;gap:8px;flex-basis:100%}
 .who-form input{flex:1 1 160px;width:auto}
 .linkbtn{font:inherit;font-size:.85rem;font-weight:700;min-height:38px;padding:4px 6px;border:0;background:none;color:var(--accent);text-decoration:underline;cursor:pointer}
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:20px}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:20px}
+@media (max-width:600px){.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .tab{font:inherit;font-weight:800;font-size:.9rem;line-height:1.2;min-height:44px;padding:8px 6px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer}
 .tab[aria-current="page"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 h2{font-size:1.25rem;margin:0 0 4px;font-weight:800}
@@ -284,6 +285,44 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .en-k{font-size:1.4rem;font-weight:800}
 .duebox{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:0 0 16px;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:14px;font-weight:700}
 .duebox[hidden]{display:none}
+/* Learn tab and the game goal */
+.lpanel{border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:14px 16px 16px;margin:0 0 16px}
+.lpanel h3{font-size:1rem;margin:14px 0 8px}
+.lpanel h3:first-child{margin-top:0}
+.lpanel .lnum{max-width:260px}
+.lpanel .prog-bar{margin:6px 0 4px}
+.lgo{margin:14px 0 8px}
+.lgo .btn{width:100%}
+.lset{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
+.lset li{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:8px 12px;border:1.5px solid var(--line);border-left:6px solid var(--c);border-radius:14px;background:var(--card)}
+.lset .lw{display:flex;flex-direction:column}
+.lset .ar{font-family:var(--font-ar);font-size:1.6rem;line-height:1.3}
+.lset .lbtns{display:flex;flex-direction:column;align-items:flex-end}
+.lbar{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px}
+.lcard{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:22px 16px;border:2px solid var(--c);border-radius:20px;background:var(--card);min-height:300px;justify-content:center;margin:0 0 14px}
+.lcard .ar{font-family:var(--font-ar);font-size:3rem;line-height:1.4}
+.lcard .len{font-size:1.3rem;font-weight:800}
+.lcard .ar-pl{font-family:var(--font-ar);font-size:1.25rem}
+.lcard .lex{display:flex;flex-direction:column;gap:2px;max-width:46ch;padding-top:8px;border-top:1px dashed var(--line)}
+.lnav{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.lopt{font-size:1rem;font-weight:700;padding:10px 14px}
+.ldone{text-align:center;padding:20px 0}
+.ldone .lbig{font-size:1.6rem;font-weight:800;margin:0 0 6px}
+.ldone .actions{justify-content:center}
+#q-goal:empty{display:none}
+.ggoal-in{border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:12px 16px;margin:0 0 16px}
+.ggoal-in h3{font-size:1.05rem;margin:0 0 2px}
+.ggoal-in > .meta{margin:0 0 6px}
+.gsteps{list-style:none;margin:0;padding:0}
+.gsteps li{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.gsteps .gnum{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--ink-2)}
+.gsteps .gnum .ic{width:16px;height:16px}
+.gsteps .done .gnum{background:var(--ok);border-color:var(--ok);color:var(--on-accent)}
+.gsteps .now .gnum{border-color:var(--accent);color:var(--accent)}
+.gsteps .gt{display:flex;flex-direction:column}
+.gsteps small{color:var(--ink-2);font-size:.85rem}
+.gsteps .done b{color:var(--ink-2)}
+.gplay{font-weight:800;font-size:.85rem;color:var(--accent)}
 /* Ummah Apps family strip: the same in all four apps */
 .ua-fam{--f-card:#FFFFFF;--f-ink:#15233F;--f-muted:#56637D;--f-line:#D3DBE6;--f-lapis:#1E4FA0;--f-soft:#DCE6F7;margin:24px 0 0;padding-top:20px;border-top:1px solid var(--f-line)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ua-fam{--f-card:#162035;--f-ink:#E6EBF4;--f-muted:#9AA6BD;--f-line:#2A3753;--f-lapis:#8DB0EC;--f-soft:#1D2D4D}}
@@ -323,7 +362,8 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   <section id="ua-today" aria-label="Today's practice" hidden></section>
 
   <nav class="tabs" aria-label="Sections">
-    <button class="tab" data-tab="words" aria-current="page">Words</button>
+    <button class="tab" data-tab="learn" aria-current="page">Learn</button>
+    <button class="tab" data-tab="words">Words</button>
     <button class="tab" data-tab="quiz">Game</button>
     <button class="tab" data-tab="known">Known well</button>
     <button class="tab" data-tab="mine">My words</button>
@@ -337,7 +377,12 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       <details><summary>See more</summary><div class="prog-rows" id="prog-rows"></div></details>
     </section>
 
-    <section id="view-words" aria-labelledby="h-words">
+    <section id="view-learn" aria-labelledby="h-learn">
+      <h2 id="h-learn">Learn new words</h2>
+      <div id="learn"></div>
+    </section>
+
+    <section id="view-words" hidden aria-labelledby="h-words">
       <h2 id="h-words">Tap a word to hear it</h2>
       <p class="lead">Each word has its forms or plural and an example sentence. Tap Mark as learned to add a word to the game. Get it right 5 times in a row in the game and it moves to Known well by itself, or tap Known well yourself. Known well words come back now and then for a memory check.</p>
       <div class="duebox" id="ua-note" hidden><span id="ua-text"></span><span><button class="btn small primary" id="ua-add" type="button">Mark them as learned</button> <button class="linkbtn" id="ua-hide" type="button">Not now</button></span></div>
@@ -384,6 +429,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
         <h2 id="h-quiz">Game</h2>
         <span class="score" id="q-score"></span>
       </div>
+      <div id="q-goal"></div>
       <div class="toolbar">
         <div class="chips" id="q-mode" role="group" aria-label="Game type" style="margin-bottom:0">
           <button class="chip-btn" type="button" data-mode="read" aria-pressed="true">Read it</button>
@@ -393,7 +439,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
         </div>
       </div>
       <div class="duebox" id="q-due" hidden><span id="q-due-text"></span><button class="btn small" id="q-due-go" type="button">Check them now</button></div>
-      <div id="q-empty" hidden><p class="lead" id="q-empty-text"></p><button class="btn primary" id="q-go" type="button">Go to Words</button></div>
+      <div id="q-empty" hidden><p class="lead" id="q-empty-text"></p><button class="btn primary" id="q-go" type="button">Get new words</button></div>
       <div id="q-play">
         <div class="prompt" id="q-prompt"></div>
         <div class="qopts" id="q-opts"></div>
@@ -937,6 +983,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   function forget(id){delete learned[id];unKnow(id);lsSet(K("learned"),learned)}
   function tally(id,ok){
     if(learned[id]&&!known[id])addPractice({c:1});
+    if(!$("#view-quiz").hidden)goalTick(Q.mode);
     if(!ok){if(streak[id]){delete streak[id];lsSet(K("streak"),streak)}return 0}
     var n=(streak[id]||0)+1;
     if(n>=GOAL){makeKnown(id);return -1}
@@ -1250,6 +1297,8 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     return pool;
   }
   function newQ(){
+    if(Q.goNext){var gn=Q.goNext;Q.goNext=null;pickMode(gn)}
+    renderGoal();
     renderDue();
     var pool=modePool();
     var recall=isRecall();
@@ -1295,7 +1344,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     var b=e.target.closest("#q-listen");if(b&&Q.target)speak(Q.target.ar,b);
   });
   $("#q-next").addEventListener("click",newQ);
-  $("#q-go").addEventListener("click",function(){show("words")});
+  $("#q-go").addEventListener("click",function(){show("learn")});
   $("#q-mode").addEventListener("click",function(e){
     var b=e.target.closest("button[data-mode]");if(!b)return;
     Q.mode=b.dataset.mode;Q.last=null;
@@ -1471,7 +1520,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     if(C.stage!=="reveal")return;
     C.stage="done";
     var id=C.cur;
-    addPractice({v:1});
+    addPractice({v:1});goalTick("check");
     if(ok){tone(true);C.kept++;schedule(id,((review[id]||{}).s||0)+1)}
     else{tone(false);C.lost++;unKnow(id);Q.last=null}
     setTimeout(function(){if(!$("#k-check").hidden)nextCheckWord()},ok?700:900);
@@ -1545,7 +1594,8 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     stopSpeech();
     if(name!=="known"&&C.cur)endCheck();
     tabs.forEach(function(t){if(t.dataset.tab===name)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
-    ["words","quiz","known","mine"].forEach(function(n){$("#view-"+n).hidden=(n!==name)});
+    ["learn","words","quiz","known","mine"].forEach(function(n){$("#view-"+n).hidden=(n!==name)});
+    if(name==="learn")renderLearn();
     if(name==="known")renderKnown();
     if(name==="quiz")newQ();
   }
@@ -1572,6 +1622,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     filter.cat="all";renderChips();renderWho();renderWords();renderMine();renderDue();
     if(!$("#view-known").hidden)renderKnown();
     if(!$("#view-quiz").hidden)newQ();
+    L.stage="home";if(!$("#view-learn").hidden)renderLearn();
   }
   function openWhoForm(mode){
     whoMode=mode;
@@ -1621,6 +1672,197 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   if(window.UA){UA.setCurrent(curProfile().ua);shareKnown()}
   renderWho();renderChips();renderWords();renderAddCats();renderMine();paintRate();syncAddType();
   loadSettings();if(window.UA)UA.watch(function(){return curProfile().ua},applySettings);
+  // ---------- Learn: new words given in sets, met one by one like flashcards, then a quick check ----------
+  // The path takes words in turn from each group the learner ticked, in the order they are listed. Words swapped out or already known are left out.
+  // mode: "new" (a set from the path, quick check at the end), "meet" (whole groups added at once, no check), "review" (learned words, meaning hidden until tapped)
+  var L={stage:"home",list:[],idx:0,shown:false,mode:"new",q:null};
+  function lday(){return window.UA?UA.dayNo():Math.floor(Date.now()/DAY)}
+  function pathOpts(){
+    var o=lsGet(K("path"),{}),cats=CATS.map(function(c){return c[0]});
+    o.cats=Array.isArray(o.cats)?o.cats.filter(function(c){return cats.indexOf(c)>=0}):cats.slice();
+    if([5,10,15].indexOf(o.n)<0)o.n=5;
+    if(!Array.isArray(o.skip))o.skip=[];
+    return o;
+  }
+  function savePath(o){lsSet(K("path"),o)}
+  // Every word in the ticked groups: the first word of each group, then the second of each, and so on
+  function pathWords(o){
+    var order=CATS.map(function(c){return c[0]}),pos={};
+    return BUILTIN.filter(function(w){return o.cats.indexOf(w.cat)>=0}).map(function(w){pos[w.cat]=(pos[w.cat]||0)+1;return [w,pos[w.cat]]})
+      .sort(function(a,b){return a[1]-b[1]||order.indexOf(a[0].cat)-order.indexOf(b[0].cat)}).map(function(x){return x[0]});
+  }
+  function isNew(w,o){return !learned[w.id]&&!known[w.id]&&o.skip.indexOf(w.id)<0}
+  function nextWords(o,n,avoid){return pathWords(o).filter(function(w){return isNew(w,o)&&(!avoid||avoid.indexOf(w.id)<0)}).slice(0,n)}
+  // A word the learner already knows goes straight to Known well, with its first memory check some days away
+  function knowNow(w){
+    learned[w.id]=1;known[w.id]=1;delete streak[w.id];review[w.id]={s:1,due:Date.now()+(7+Math.floor(Math.random()*24))*DAY};
+    lsSet(K("learned"),learned);lsSet(K("known"),known);lsSet(K("streak"),streak);lsSet(K("review"),review);shareKnown([w.id]);
+  }
+  function addToLearning(list){
+    list.forEach(function(w){learned[w.id]=1});
+    lsSet(K("learned"),learned);Q.last=null;
+    if(list.length)addPractice({n:list.length});
+    renderWords();
+  }
+  function catLabel(o){
+    var names=CATS.filter(function(c){return o.cats.indexOf(c[0])>=0}).map(function(c){return c[1]});
+    return names.length===CATS.length?"all groups":names.join(", ");
+  }
+  function wordExtra(w){
+    return (w.t==="n"&&w.pl?'<span class="meta">Plural: <span class="ar-pl" lang="ar" dir="rtl">'+esc(w.pl)+'</span></span>':"")+
+      (w.t==="v"&&w.pres?'<span class="meta">Present: <span class="ar-pl" lang="ar" dir="rtl">'+esc(w.pres)+'</span></span>':"")+
+      (w.ex?'<span class="lex"><span class="ar-pl" lang="ar" dir="rtl">'+esc(w.ex)+'</span>'+(w.exen?'<span class="meta">'+esc(w.exen)+'</span>':"")+'</span>':"");
+  }
+  function renderLearn(){
+    var el=$("#learn"),h="",o=pathOpts();
+    if(L.stage==="home"){
+      var all=pathWords(o),started=all.filter(function(w){return learned[w.id]||known[w.id]}).length,left=all.filter(function(w){return isNew(w,o)}).length,give=Math.min(o.n,left),nl=quizPool().length;
+      h='<p class="lead">Let the app choose your next words. You meet them one by one like flashcards, then do a quick check, and they go into your learned words for the game.</p>'+
+        '<div class="lpanel"><h3>1. Choose your groups</h3>'+
+        '<p class="meta">Tick as many groups as you like. <button class="linkbtn" type="button" data-l="allcats">Tick all</button> <button class="linkbtn" type="button" data-l="nocats">Clear</button></p>'+
+        '<div class="chips" role="group" aria-label="Groups">'+CATS.map(function(c){
+          return '<button class="chip-btn" type="button" data-cat="'+c[0]+'" style="--c:var(--h'+colOf(c[0])+')" aria-pressed="'+(o.cats.indexOf(c[0])>=0)+'">'+esc(c[1])+'</button>'}).join("")+'</div>'+
+        '<h3>2. How many new words at a time</h3>'+
+        '<div class="seg lnum" role="group" aria-label="New words at a time">'+[5,10,15].map(function(n){return '<button type="button" data-ln="'+n+'" aria-pressed="'+(o.n===n)+'">'+n+'</button>'}).join("")+'</div>'+
+        '<h3>3. Learn</h3>'+
+        (o.cats.length?'<p class="meta">'+started+' of '+all.length+' words started in '+esc(catLabel(o))+'.</p>'+progBar(started,0,all.length||1,"thin"):'<p class="meta">Tick at least one group.</p>')+
+        '<div class="actions lgo"><button class="btn primary big" type="button" data-l="give"'+(give?"":" disabled")+'>'+(give?"Give me "+give+" new word"+(give===1?"":"s"):o.cats.length?"Every word here is started":"Tick a group first")+'</button></div>'+
+        (left>give?'<p class="meta">Or take every word in these groups at once: <button class="linkbtn" type="button" data-l="addall">Add all '+left+' to my learned words</button></p>':"")+
+        '</div>'+
+        (nl?'<div class="lpanel"><h3>Your learned words</h3><p class="meta">You are practising '+nl+' word'+(nl===1?"":"s")+'. Go through them one by one, or practise them in the game until each one moves to Known well.</p>'+
+          '<div class="actions"><button class="btn big" type="button" data-l="review">Go through them one by one</button><button class="btn big" type="button" data-l="game">Play the game</button></div></div>':"");
+    }else if(L.stage==="preview"){
+      h='<h3>Your new words</h3><p class="meta">Swap any word you don\'t want, or tap I know it to skip a word you already know.</p><ul class="lset">'+
+        L.list.map(function(w,i){
+          return '<li style="--c:var(--h'+colOf(w.cat)+')"><span class="lw"><span class="ar" lang="ar" dir="rtl">'+esc(w.ar)+'</span><span class="meta">'+esc(w.en)+'</span></span>'+
+            '<span class="lbtns"><button class="linkbtn" type="button" data-l="swap" data-i="'+i+'">Swap</button><button class="linkbtn" type="button" data-l="knowit" data-i="'+i+'">I know it</button></span></li>'}).join("")+'</ul>'+
+        (L.list.length?'<div class="actions"><button class="btn primary big" type="button" data-l="start">Start: meet them one by one</button><button class="btn" type="button" data-l="home">Back</button></div>'
+          :'<p class="meta">No new words left in these groups.</p><div class="actions"><button class="btn" type="button" data-l="home">Back</button></div>');
+    }else if(L.stage==="cards"){
+      var w=L.list[L.idx],show=L.mode!=="review"||L.shown,last=L.idx>=L.list.length-1;
+      h='<div class="lbar"><span class="meta">'+(L.mode==="review"?"Learned words · ":"")+(L.idx+1)+' of '+L.list.length+'</span><button class="linkbtn" type="button" data-l="stop">Stop</button></div>'+
+        '<div class="lcard" style="--c:var(--h'+colOf(w.cat)+')"><span class="ar" lang="ar" dir="rtl">'+esc(w.ar)+'</span>'+
+        (show?'<span class="len">'+esc(w.en)+'</span>'+wordExtra(w):'<button class="btn" type="button" data-l="reveal">'+ICON.eye+'<span>Show the meaning</span></button>')+
+        '<button class="btn small" type="button" data-l="hear">'+ICON.speaker+'<span>Hear it</span></button></div>'+
+        '<div class="actions lnav"><button class="btn big" type="button" data-l="prev"'+(L.idx?"":" disabled")+'>Back</button><button class="btn primary big" type="button" data-l="next">'+(!last?"Next":L.mode==="new"?"Quick check":"Finish")+'</button></div>';
+    }else if(L.stage==="check"){
+      var q=L.q,t=byId(q.cur);
+      h='<div class="lbar"><span class="meta">Quick check · '+q.done+' of '+q.total+'</span><button class="linkbtn" type="button" data-l="stop">Stop</button></div>'+
+        '<div class="prompt"><span class="ar" lang="ar" dir="rtl">'+esc(t.ar)+'</span><button class="btn small" type="button" data-l="hear">'+ICON.speaker+'<span>Hear it</span></button><span class="meta">What does it mean?</span></div>'+
+        '<div class="qopts">'+q.opts.map(function(x){
+          var cls=q.picked==null?"":x.id===t.id?" hit":x.id===q.picked?" miss":"";
+          return '<button class="qopt lopt'+cls+'" type="button" data-opt="'+esc(x.id)+'"'+(q.picked!=null?" disabled":"")+'>'+esc(x.en)+'</button>'}).join("")+'</div>'+
+        (q.picked!=null?'<p class="msg">'+(q.picked===t.id?"Yes!":"Not quite. It means "+esc(t.en)+". It will come again.")+'</p><div class="actions"><button class="btn primary big" type="button" data-l="cnext">Next</button></div>':"");
+    }else{
+      var n=L.list.length;
+      h='<div class="ldone"><p class="lbig">Masha Allah!</p><p>'+(L.mode==="review"?"You went through your "+n+" learned word"+(n===1?"":"s")+".":n+" new word"+(n===1?" is":"s are")+" now in your learned words. Practise "+(n===1?"it":"them")+" in the game until each one moves to Known well.")+'</p>'+
+        '<div class="actions"><button class="btn primary big" type="button" data-l="game">Play the game</button>'+(L.mode==="review"?"":'<button class="btn big" type="button" data-l="give">Give me more words</button>')+'<button class="btn big" type="button" data-l="home">Back to Learn</button></div></div>';
+    }
+    el.innerHTML=h;
+  }
+  function lgo(stage){L.stage=stage;renderLearn();$("#view-learn").scrollIntoView({block:"start"});if(stage==="cards"&&L.mode!=="review")speak(L.list[L.idx].ar,null)}
+  function giveSet(){var o=pathOpts();L.mode="new";L.list=nextWords(o,o.n);L.idx=0;lgo("preview")}
+  function startReview(){L.mode="review";L.list=shuffle(quizPool());L.idx=0;L.shown=false;if(L.list.length)lgo("cards");else lgo("home")}
+  function newCheck(){
+    var q=L.q;q.cur=q.queue.shift();q.picked=null;
+    var t=byId(q.cur),seen={};seen[t.en]=1;
+    var others=shuffle(L.list.filter(function(w){return w.id!==t.id})).concat(shuffle(BUILTIN.filter(function(w){return w.cat===t.cat})),shuffle(BUILTIN)),opts=[t];
+    others.forEach(function(w){if(opts.length<4&&!seen[w.en]&&w.ar!==t.ar){seen[w.en]=1;opts.push(w)}});
+    q.opts=shuffle(opts);renderLearn();speak(t.ar,null);
+  }
+  function finishSet(){
+    if(L.mode==="new")addToLearning(L.list.filter(function(w){return !learned[w.id]}));
+    lgo("done");
+  }
+  $("#learn").addEventListener("click",function(e){
+    var o=pathOpts(),b;
+    if((b=e.target.closest("[data-cat]"))){var c=b.dataset.cat,i=o.cats.indexOf(c);if(i>=0)o.cats.splice(i,1);else o.cats.push(c);savePath(o);renderLearn();var f=$('#learn [data-cat="'+c+'"]');if(f)f.focus();return}
+    if((b=e.target.closest("[data-ln]"))){o.n=+b.dataset.ln;savePath(o);renderLearn();return}
+    if((b=e.target.closest("[data-opt]"))){
+      var q=L.q;if(q.picked!=null)return;
+      q.picked=b.dataset.opt;var ok=q.picked===q.cur;
+      tone(ok);if(ok)q.done++;else if(!q.miss[q.cur]){q.miss[q.cur]=1;q.queue.push(q.cur)}else q.done++;
+      renderLearn();return;
+    }
+    b=e.target.closest("[data-l]");if(!b)return;
+    var a=b.dataset.l,w;
+    if(a==="allcats"){o.cats=CATS.map(function(c){return c[0]});savePath(o);renderLearn()}
+    else if(a==="nocats"){o.cats=[];savePath(o);renderLearn()}
+    else if(a==="give")giveSet();
+    else if(a==="home"){L.stage="home";renderLearn()}
+    else if(a==="game"){L.stage="home";renderLearn();show("quiz");$(".tabs").scrollIntoView({block:"start"})}
+    else if(a==="review")startReview();
+    else if(a==="addall"){
+      var list=pathWords(o).filter(function(w){return isNew(w,o)});
+      if(!list.length||!confirm("Add all "+list.length+" new words in "+catLabel(o)+" to your learned words?\n\nNext you can meet them one by one, and they all go into the game."))return;
+      addToLearning(list);L.mode="meet";L.list=list;L.idx=0;lgo("cards");
+      toast(list.length+" words added to your learned words.");
+    }
+    else if(a==="swap"||a==="knowit"){
+      var k=+b.dataset.i;w=L.list[k];if(!w)return;
+      if(a==="swap"){o.skip.push(w.id);savePath(o)}else{knowNow(w);toast(w.en+" is now Known well.")}
+      var more=nextWords(o,1,L.list.map(function(x){return x.id}));
+      if(more.length)L.list[k]=more[0];else L.list.splice(k,1);
+      renderLearn();
+    }
+    else if(a==="start"){L.idx=0;lgo("cards")}
+    else if(a==="hear")speak(L.stage==="check"?byId(L.q.cur).ar:L.list[L.idx].ar,b);
+    else if(a==="reveal"){L.shown=true;renderLearn();speak(L.list[L.idx].ar,null)}
+    else if(a==="prev"){if(L.idx){L.idx--;L.shown=false;renderLearn();if(L.mode!=="review")speak(L.list[L.idx].ar,null)}}
+    else if(a==="next"){
+      if(L.idx<L.list.length-1){L.idx++;L.shown=false;renderLearn();if(L.mode!=="review")speak(L.list[L.idx].ar,null)}
+      else if(L.mode==="new"){L.q={queue:shuffle(L.list.map(function(x){return x.id})),miss:{},done:0,total:L.list.length};L.stage="check";newCheck()}
+      else lgo("done");
+    }
+    else if(a==="cnext"){if(L.q.queue.length)newCheck();else finishSet()}
+    else if(a==="stop"){stopSpeech();L.stage="home";renderLearn()}
+  });
+
+  // ---------- Game goal: the steps to do each day, so the game has a clear order ----------
+  var GTARGET=10;
+  function pickMode(m){Q.mode=m;Q.last=null;document.querySelectorAll("#q-mode button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.mode===m))})}
+  function goalLoad(){var g=lsGet(K("goal"),null);return g&&g.d===lday()&&g.c?g:{d:lday(),c:{}}}
+  function goalSteps(){
+    var pool=quizPool(),g=goalLoad(),due=dueList().length,steps=[];
+    if(due||g.c.check)steps.push(["check","Memory check","Check the Known well words that are due.",Math.min(GTARGET,due+(g.c.check||0))]);
+    if(pool.length>=4)steps.push(["read","Read it","Pick the meaning of each word.",GTARGET]);
+    if(pool.length)steps.push(["recall","Say it from memory","See the English, say the Arabic out loud.",GTARGET]);
+    if(pool.some(function(w){return w.t==="v"&&w.pres}))steps.push(["forms","Say the verb forms","Say the past and present of each verb.",GTARGET]);
+    else if(pool.some(function(w){return w.t==="n"&&w.pl}))steps.push(["pl","Say the plural","Say the plural of each word.",GTARGET]);
+    return steps;
+  }
+  function goalNext(g,steps){return steps.filter(function(s){return (g.c[s[0]]||0)<s[3]})[0]||null}
+  function renderGoal(){
+    var el=$("#q-goal"),g=goalLoad(),steps=goalSteps(),cur=goalNext(g,steps);
+    if(!steps.length){
+      el.innerHTML='<div class="ggoal-in"><h3>Your goal starts with new words</h3><p class="meta">The game uses your learned words, and you need at least 4.</p><button class="btn primary" type="button" data-g="learn">Get new words</button></div>';return;
+    }
+    el.innerHTML='<div class="ggoal-in"><h3>'+(cur?"Today\'s goal":"Today\'s goal is done. Masha Allah!")+'</h3>'+
+      '<p class="meta">'+(cur?"Do the steps in order. Every answer counts, right or wrong.":'Play any game you like, or <button class="linkbtn" type="button" data-g="learn">get new words</button>.')+'</p>'+
+      '<ol class="gsteps">'+steps.map(function(s,i){
+        var n=Math.min(g.c[s[0]]||0,s[3]),done=n>=s[3],now=cur===s;
+        return '<li class="'+(done?"done":now?"now":"")+'"><span class="gnum" aria-hidden="true">'+(done?ICON.check:i+1)+'</span><span class="gt"><b>'+s[1]+'</b><small>'+(done?"Done · ":n+" of "+s[3]+" · ")+s[2]+'</small></span>'+
+          (now?(Q.mode===s[0]&&!$("#view-quiz").hidden?'<span class="gplay">Playing</span>':'<button class="btn primary small" type="button" data-g="'+s[0]+'">Play</button>'):"")+'</li>'}).join("")+'</ol></div>';
+  }
+  function goalTick(m){
+    var g=goalLoad(),before=goalNext(g,goalSteps());
+    g.c[m]=(g.c[m]||0)+1;lsSet(K("goal"),g);
+    var after=goalNext(g,goalSteps());
+    if(before&&before[0]===m&&(!after||after[0]!==before[0])){
+      if(after){if(after[0]!=="check")Q.goNext=after[0];toast("Step done! Next: "+after[1]+".")}
+      else toast("Today\'s game goal is done. Masha Allah!",5000);
+    }
+    renderGoal();
+  }
+  $("#q-goal").addEventListener("click",function(e){
+    var b=e.target.closest("[data-g]");if(!b)return;
+    var m=b.dataset.g;
+    if(m==="learn"){show("learn");$(".tabs").scrollIntoView({block:"start"});return}
+    if(m==="check"){show("known");startCheck();return}
+    Q.goNext=null;pickMode(m);newQ();
+  });
+  renderLearn();
+
   // Today's practice across the four apps (ummah.js): memory checks due, Learning words to strengthen, new words started
   function addPractice(x){if(window.UA)UA.practiceAdd(curProfile().ua,"kalimat-plus",x)}
   function practiceState(){
@@ -1635,9 +1877,8 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     return {o:o,r:r};
   }
   function startStep(step){
-    show(step==="old"?"known":step==="new"?"words":"quiz");
+    show(step==="old"?"known":step==="new"?"learn":"quiz");
     if(step==="old")startCheck();
-    if(step==="new")toast("Tap Learning on a few new words to start them.");
     $(".tabs").scrollIntoView({behavior:"smooth",block:"start"});
   }
   if(window.UA)UA.mountToday($("#ua-today"),{app:"kalimat-plus",ua:function(){return curProfile().ua},name:function(){return curProfile().name},state:practiceState,start:startStep,onSettings:applySettings});

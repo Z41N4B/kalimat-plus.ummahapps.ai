@@ -4,7 +4,9 @@ A free Fusha (Modern Standard Arabic) vocabulary trainer for deeper topics. Live
 
 Discussion phrases (opinions, agreeing, contrast, cause and effect, linking words) have moved to Takallum, https://takallum.ummahapps.ai/, where each one has its own speaking drill.
 
-**Words:** 277 words and phrases with full harakat in four topics: religion and worship, tarbiyyah and upbringing (including modern parenting: screens, social media, peer pressure, bullying), relationships and character, and the environment.
+**Words:** 475 words and phrases with full harakat. 277 are in four topics: religion and worship, tarbiyyah and upbringing (including modern parenting: screens, social media, peer pressure, bullying), relationships and character, and the environment.
+
+**GCSE Arabic:** 198 more are for GCSE Arabic (Pearson Edexcel), in a group for each of the 13 topics of the five GCSE themes: Identity and culture (Who am I?, Daily life, Cultural life); Local area, holiday and travel (Holidays, Travel and tourist transactions, Town, region and country); School (What school is like, School activities); Future aspirations, study and work (Using languages beyond the classroom, Ambitions, Work); International and global dimension (Bringing the world together, Environmental issues). They are in `GCSE` in `index.html`. Each GCSE group in `CATS` has its theme as a third item, and the group lists show a heading where the theme changes. The Learn tab has a GCSE only button; until a learner chooses, it starts with the four topics that are not GCSE. Takallum has speaking phrases for the same topics.
 
 ## Features
 - Tap any word to hear it at slow, normal or natural speed (uses the device's Arabic text-to-speech voice)

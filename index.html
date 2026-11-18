@@ -347,6 +347,65 @@ a.ua-app:hover{border-color:var(--f-lapis)}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 @media (max-width:640px){.row3{grid-template-columns:1fr 1fr}.row3 input{grid-column:1/-1}}
 @media (max-width:420px){.qopts{grid-template-columns:1fr}}
+/* ---------- Layout: compact header, one progress card, bottom tabs on phones ---------- */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.top{align-items:center;justify-content:space-between;row-gap:4px}
+.top h1{align-items:baseline;flex:1 1 auto;min-width:0}
+.tagline{order:3}
+.who{flex-basis:auto;margin-top:0;margin-left:auto;position:relative;flex-wrap:nowrap}
+.who-btn{font:inherit;font-weight:800;font-size:.95rem;display:inline-flex;align-items:center;gap:6px;max-width:52vw;min-height:44px;padding:4px 12px 4px 10px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);cursor:pointer}
+.who-btn .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who-btn .car{flex:none;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+.who-btn[aria-expanded="true"] .car{transform:rotate(180deg)}
+.icon-btn{flex:none;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1.5px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink-2);cursor:pointer}
+.icon-btn svg{width:22px;height:22px}
+.who-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:40;width:max-content;min-width:220px;max-width:min(320px,92vw);display:flex;flex-direction:column;gap:6px;padding:10px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(10,20,40,.16)}
+.who-menu[hidden]{display:none}
+.who-menu .label{padding:2px 4px}
+.who-menu .chip-btn{text-align:left}
+.who-menu .who-acts{display:flex;flex-wrap:wrap;gap:4px}
+.who-form{margin-top:6px}
+.tab{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.ti{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab-more{display:none}
+.more-menu[hidden]{display:none}
+.tabs{position:sticky;top:0;z-index:30;padding:8px 0;margin:0 0 12px;background:var(--paper)}
+#today-wrap{margin-top:8px}
+details.tips{margin:0 0 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);padding:0 14px}
+details.tips>summary{cursor:pointer;font-weight:800;color:var(--accent);padding:10px 0;list-style-position:inside}
+details.tips[open]{padding-bottom:12px}
+details.tips p{margin:0 0 8px;color:var(--ink-2)}
+details.tips .voice-row{margin-bottom:8px}
+.lhero .lgo{margin-top:12px}
+.lhero p.meta{margin:4px 0}
+.lhero .lsum{margin:2px 0 6px;color:var(--ink-2)}
+.lhero .lsetup{margin-top:14px;padding-top:4px;border-top:1px solid var(--line)}
+.lhero h3.big{font-size:1.15rem;margin:0 0 2px}
+@media (max-width:700px){
+  .wrap{padding-top:6px;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .top{margin-bottom:10px}
+  .tagline{display:none}
+  .brand-ar{font-size:2rem}
+  .brand-en{font-size:.68rem;letter-spacing:.1em}
+  .top h1{gap:8px}
+  .tabs{position:fixed;left:0;right:0;bottom:0;top:auto;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px));background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(10,20,40,.08)}
+  .tab,.tab-more{flex-direction:column;gap:2px;min-height:54px;padding:4px 2px;border:0;border-radius:12px;background:none;color:var(--ink-2);font:inherit;font-size:.72rem;font-weight:800;line-height:1.1;cursor:pointer}
+  .tab-more{display:flex;align-items:center;justify-content:center}
+  .tab[data-tab="mine"],.tab[data-tab="about"]{display:none}
+  .tab .ti,.tab-more .ti{width:44px;height:28px;padding:3px 10px;border-radius:999px;box-sizing:border-box}
+  .tab[aria-current="page"],.tab-more.on{background:none;border:0;color:var(--accent)}
+  .tab[aria-current="page"] .ti,.tab-more.on .ti{background:var(--accent-soft)}
+  .more-menu{position:absolute;right:8px;bottom:calc(100% + 8px);display:flex;flex-direction:column;min-width:200px;padding:6px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(10,20,40,.18)}
+  .more-menu button{font:inherit;font-weight:800;display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 12px;border:0;border-radius:10px;background:none;color:var(--ink);text-align:left;cursor:pointer}
+  .more-menu button[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+  .more-menu .ti{width:22px;height:22px}
+  #toast{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+  #q-mode{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding:2px 16px 6px;scrollbar-width:none}
+  #q-mode::-webkit-scrollbar{display:none}
+  #q-mode .chip-btn{flex:none;white-space:nowrap}
+}
+@media (min-width:701px){.who-menu .chip-btn{min-width:0}}
+@media (max-width:400px){.brand-en{max-width:5em;line-height:1.2}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -356,7 +415,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   <header class="top">
     <h1><span class="brand-ar" lang="ar" dir="rtl">كَلِمَات</span>
     <span class="brand-en">Kalimat Plus</span></h1>
-    <p class="tag">Fusha vocabulary for deeper topics, with a computer voice. Looking for discussion phrases like <span lang="ar" dir="rtl">فِي رَأْيِي</span>? They have moved to <a href="https://takallum.ummahapps.ai/">Takallum</a>, where you practise saying them.</p>
+    <p class="tag tagline">Fusha vocabulary for deeper topics, with a computer voice. Looking for discussion phrases like <span lang="ar" dir="rtl">فِي رَأْيِي</span>? They have moved to <a href="https://takallum.ummahapps.ai/">Takallum</a>, where you practise saying them.</p>
     <div class="who" id="who" role="group" aria-label="Learner"></div>
     <form class="who-form" id="who-form" hidden autocomplete="off">
       <input type="text" id="who-name" maxlength="20" placeholder="Learner's name" aria-label="Learner's name">
@@ -364,15 +423,18 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       <button class="btn small" type="button" id="who-cancel">Cancel</button>
     </form>
   </header>
-  <section id="ua-today" aria-label="Today's practice" hidden></section>
-
   <nav class="tabs" aria-label="Sections">
-    <button class="tab" data-tab="learn" aria-current="page">Learn</button>
-    <button class="tab" data-tab="words">Words</button>
-    <button class="tab" data-tab="quiz">Game</button>
-    <button class="tab" data-tab="known">Known well</button>
-    <button class="tab" data-tab="mine">My words</button>
-    <button class="tab" data-tab="about">About</button>
+    <button class="tab" data-tab="learn" aria-current="page"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5-.7 1.5-1.5z"/></svg><span>Learn</span></button>
+    <button class="tab" data-tab="words"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span>Words</span></button>
+    <button class="tab" data-tab="quiz"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M10 8.8v6.4l5.2-3.2z"/></svg><span>Game</span></button>
+    <button class="tab" data-tab="known"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.7 2.7 5.5-5.5"/></svg><span>Known well</span></button>
+    <button class="tab" data-tab="mine"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg><span>My words</span></button>
+    <button class="tab" data-tab="about"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6v.1"/></svg><span>About</span></button>
+    <button class="tab-more" id="tab-more" type="button" aria-expanded="false" aria-controls="more-menu"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18" cy="12" r="1.3"/></svg><span>More</span></button>
+    <div class="more-menu" id="more-menu" hidden>
+      <button type="button" data-go="mine"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/></svg><span>My words</span></button>
+      <button type="button" data-go="about"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.6v.1"/></svg><span>About</span></button>
+    </div>
   </nav>
 
   <main>
@@ -384,14 +446,18 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     </section>
 
     <section id="view-learn" aria-labelledby="h-learn">
-      <h2 id="h-learn">Learn new words</h2>
+      <h2 id="h-learn" class="sr-only">Learn new words</h2>
       <div id="learn"></div>
+      <div id="today-wrap"><section id="ua-today" aria-label="Today's practice" hidden></section></div>
     </section>
 
     <section id="view-words" hidden aria-labelledby="h-words">
       <h2 id="h-words">Tap a word to hear it</h2>
-      <p class="lead">Each word has its forms or plural and an example sentence. Tap Mark as learned to add a word to the game. Get it right 5 times in a row in the game and it moves to Known well by itself, or tap Known well yourself. Known well words come back now and then for a memory check.</p>
+      <details class="tips"><summary>How the Words tab works</summary>
+        <p>Each word has its forms or plural and an example sentence. Tap Mark as learned to add a word to the game. Get it right 5 times in a row in the game and it moves to Known well by itself, or tap Known well yourself. Known well words come back now and then for a memory check.</p>
+      </details>
       <div class="duebox" id="ua-note" hidden><span id="ua-text"></span><span><button class="btn small primary" id="ua-add" type="button">Mark them as learned</button> <button class="linkbtn" id="ua-hide" type="button">Not now</button></span></div>
+      <details class="tips" id="voice-box"><summary>Voice and speed</summary>
       <div class="voice-row">
         <label for="voice-sel">Voice</label>
         <select id="voice-sel" aria-label="Voice"></select>
@@ -401,8 +467,9 @@ a.ua-app:hover{border-color:var(--f-lapis)}
           <button type="button" data-rate="1" aria-pressed="false">Natural</button>
         </div>
       </div>
-      <p class="note" id="voice-note" hidden>No Arabic voice was found on this device, so the default voice is used and may sound wrong. Add an Arabic voice in your device's speech or language settings for better results. The steps are just below.</p>
       <div id="vg"></div>
+      </details>
+      <p class="note" id="voice-note" hidden>No Arabic voice was found on this device, so the default voice is used and may sound wrong. Add an Arabic voice in your device's speech or language settings for better results. The steps are just below.</p>
       <div class="chips" id="chips"></div>
       <div class="toolbar">
         <div class="row3">
@@ -1210,6 +1277,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   })});
 
   var ICON={
+    gear:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
     speaker:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 9a4.5 4.5 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/></svg>',
     check:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
     cross:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
@@ -1882,32 +1950,55 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     }
   });
 
-  var tabs=document.querySelectorAll(".tab");
+  var tabs=document.querySelectorAll(".tab"),MORE=["mine","about"];
+  // On phones the tabs sit in a bar at the bottom; My words and About go in the More menu
+  function phone(){return window.matchMedia("(max-width:700px)").matches}
+  function toView(smooth){
+    var m=document.querySelector("main"),y=m.getBoundingClientRect().top+window.scrollY-(phone()?8:$(".tabs").offsetHeight);
+    if(window.scrollY>y||smooth)window.scrollTo({top:Math.max(0,y),behavior:smooth?"smooth":"auto"});
+  }
+  function moreMenu(open){$("#more-menu").hidden=!open;$("#tab-more").setAttribute("aria-expanded",String(open))}
   function show(name){
-    stopSpeech();
+    stopSpeech();moreMenu(false);
     if(name!=="known"&&C.cur)endCheck();
     tabs.forEach(function(t){if(t.dataset.tab===name)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
+    document.querySelectorAll("#more-menu [data-go]").forEach(function(b){if(b.dataset.go===name)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+    $("#tab-more").classList.toggle("on",MORE.indexOf(name)>=0);
+    // The progress card shows on Learn and Known well only
+    $(".prog").hidden=!(name==="learn"||name==="known");
     ["learn","words","quiz","known","mine","about"].forEach(function(n){$("#view-"+n).hidden=(n!==name)});
     if(name==="learn")renderLearn();
     if(name==="known")renderKnown();
     if(name==="quiz")newQ();
   }
-  tabs.forEach(function(t){t.addEventListener("click",function(){show(t.dataset.tab)})});
+  tabs.forEach(function(t){t.addEventListener("click",function(){show(t.dataset.tab);toView()})});
+  $("#tab-more").addEventListener("click",function(e){e.stopPropagation();moreMenu($("#more-menu").hidden);var f=!$("#more-menu").hidden&&$("#more-menu button");if(f)f.focus()});
+  $("#more-menu").addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(b){show(b.dataset.go);toView()}});
+  document.addEventListener("click",function(e){if(!$("#more-menu").hidden&&!e.target.closest("#more-menu,#tab-more"))moreMenu(false)});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("#more-menu").hidden){moreMenu(false);$("#tab-more").focus()}});
 
   // Learners: the same chips as Kalimat
   var whoMode="";
   function saveProfiles(){lsSet("kpp-profiles",profiles)}
+  // The learner sits in one button at the top; it opens a small menu to switch, add, rename or remove learners
+  var whoOpen=false;
   function renderWho(){
     if(window.UA)UA.refreshToday();
-    var html='<span class="label">Learner</span>'+profiles.list.map(function(p){
+    var me=curProfile();
+    var html='<button class="who-btn" type="button" data-who="menu" aria-expanded="'+whoOpen+'" aria-controls="who-menu" aria-label="Learner: '+esc(me.name)+'. Change learner">'+(me.avatar?'<span aria-hidden="true">'+esc(me.avatar)+'</span>':'')+'<span class="nm">'+esc(me.name)+'</span><svg class="car" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>';
+    if(window.UA)html+='<button class="icon-btn" type="button" data-who="settings" aria-label="Settings" title="Settings">'+ICON.gear+'</button>';
+    html+='<div class="who-menu" id="who-menu"'+(whoOpen?'':' hidden')+'><span class="label">Who is learning?</span>'+profiles.list.map(function(p){
       return '<button class="chip-btn" type="button" data-pid="'+esc(p.id)+'" aria-pressed="'+(p.id===profiles.cur)+'">'+(p.avatar?'<span aria-hidden="true">'+esc(p.avatar)+'</span> ':'')+esc(p.name)+'</button>';
     }).join("");
     if(profiles.list.length<MAXP)html+='<button class="chip-btn" type="button" data-who="add">+ Add learner</button>';
-    html+='<button class="linkbtn" type="button" data-who="rename">Rename</button>';
+    html+='<span class="who-acts"><button class="linkbtn" type="button" data-who="rename">Rename '+esc(me.name)+'</button>';
     if(profiles.list.length>1)html+='<button class="linkbtn" type="button" data-who="remove">Remove</button>';
-    if(window.UA)html+='<button class="linkbtn" type="button" data-who="settings">Settings</button>';
+    html+='</span></div>';
     $("#who").innerHTML=html;
   }
+  function closeWho(){if(whoOpen){whoOpen=false;renderWho()}}
+  document.addEventListener("click",function(e){if(whoOpen&&e.composedPath().indexOf($("#who"))<0)closeWho()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&whoOpen){closeWho();var b=$("#who .who-btn");if(b)b.focus()}});
   function refreshAll(){
     if(C.cur)endCheck();
     Q.right=0;Q.total=0;Q.last=null;R.queue=[];R.cur=null;
@@ -1925,12 +2016,15 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   $("#who").addEventListener("click",function(e){
     var p=e.target.closest("[data-pid]");
     if(p){
+      closeWho();
       if(p.dataset.pid===profiles.cur)return;
       stopSpeech();profiles.cur=p.dataset.pid;saveProfiles();loadProfile();refreshAll();
       toast("Now learning as "+curProfile().name+".");
       return;
     }
     var b=e.target.closest("[data-who]");if(!b)return;
+    if(b.dataset.who==="menu"){whoOpen=!whoOpen;renderWho();var f=whoOpen&&$('#who-menu [aria-pressed="true"]');if(f)f.focus();return}
+    closeWho();
     var act=b.dataset.who;
     if(act==="settings"){UA.openSettings({ua:curProfile().ua,name:curProfile().name,app:"kalimat-plus",onChange:applySettings});return}
     if(act==="add"||act==="rename"){openWhoForm(act);return}
@@ -2008,19 +2102,23 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   }
   function renderLearn(){
     var el=$("#learn"),h="",o=pathOpts();
+    $("#today-wrap").hidden=L.stage!=="home";
+    if(!$("#view-learn").hidden)$(".prog").hidden=L.stage!=="home";
     if(L.stage==="home"){
       var all=pathWords(o),started=all.filter(function(w){return learned[w.id]||known[w.id]}).length,left=all.filter(function(w){return isNew(w,o)}).length,give=Math.min(o.n,left),nl=quizPool().length;
-      h='<p class="lead">Let the app choose your next words. You meet them one by one like flashcards, then do a quick check, and they go into your learned words for the game.</p>'+
-        '<div class="lpanel"><h3>1. Choose your groups</h3>'+
+      var setup=L.setup||!o.cats.length;
+      h='<div class="lpanel lhero"><h3 class="big">Learn new words</h3>'+
+        '<p class="lsum">The app picks your next words. Meet them like flashcards, then a quick check.</p>'+
+        (o.cats.length?'<p class="meta">'+esc(catLabel(o))+' · '+o.n+' at a time · <button class="linkbtn" type="button" data-l="setup" aria-expanded="'+setup+'">'+(setup?"Done":"Change")+'</button></p>'+
+          '<p class="meta">'+started+' of '+all.length+' words started.</p>'+progBar(started,0,all.length||1,"thin"):'<p class="meta">Tick at least one group below to start.</p>')+
+        '<div class="actions lgo"><button class="btn primary big" type="button" data-l="give"'+(give?"":" disabled")+'>'+(give?"Give me "+give+" new word"+(give===1?"":"s"):o.cats.length?"Every word here is started":"Tick a group first")+'</button></div>'+
+        (left>give?'<p class="meta">Or take every word in these groups at once: <button class="linkbtn" type="button" data-l="addall">Add all '+left+' to my learned words</button></p>':"")+
+        (setup?'<div class="lsetup"><h3>Choose your groups</h3>'+
         '<p class="meta">Tick as many groups as you like. <button class="linkbtn" type="button" data-l="allcats">Tick all</button> <button class="linkbtn" type="button" data-l="gcse">GCSE only</button> <button class="linkbtn" type="button" data-l="nocats">Clear</button></p>'+
         '<div class="chips" role="group" aria-label="Groups">'+CATS.map(function(c,i){
           return themeHead(CATS,i)+'<button class="chip-btn" type="button" data-cat="'+c[0]+'" style="--c:var(--h'+colOf(c[0])+')" aria-pressed="'+(o.cats.indexOf(c[0])>=0)+'">'+esc(c[1])+'</button>'}).join("")+'</div>'+
-        '<h3>2. How many new words at a time</h3>'+
-        '<div class="seg lnum" role="group" aria-label="New words at a time">'+[5,10,15].map(function(n){return '<button type="button" data-ln="'+n+'" aria-pressed="'+(o.n===n)+'">'+n+'</button>'}).join("")+'</div>'+
-        '<h3>3. Learn</h3>'+
-        (o.cats.length?'<p class="meta">'+started+' of '+all.length+' words started in '+esc(catLabel(o))+'.</p>'+progBar(started,0,all.length||1,"thin"):'<p class="meta">Tick at least one group.</p>')+
-        '<div class="actions lgo"><button class="btn primary big" type="button" data-l="give"'+(give?"":" disabled")+'>'+(give?"Give me "+give+" new word"+(give===1?"":"s"):o.cats.length?"Every word here is started":"Tick a group first")+'</button></div>'+
-        (left>give?'<p class="meta">Or take every word in these groups at once: <button class="linkbtn" type="button" data-l="addall">Add all '+left+' to my learned words</button></p>':"")+
+        '<h3>How many new words at a time</h3>'+
+        '<div class="seg lnum" role="group" aria-label="New words at a time">'+[5,10,15].map(function(n){return '<button type="button" data-ln="'+n+'" aria-pressed="'+(o.n===n)+'">'+n+'</button>'}).join("")+'</div></div>':"")+
         '</div>'+
         (nl?'<div class="lpanel"><h3>Your learned words</h3><p class="meta">You are practising '+nl+' word'+(nl===1?"":"s")+'. Go through them one by one, or practise them in the game until each one moves to Known well.</p>'+
           '<div class="actions"><button class="btn big" type="button" data-l="review">Go through them one by one</button><button class="btn big" type="button" data-l="game">Play the game</button></div></div>':"");
@@ -2082,12 +2180,13 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     }
     b=e.target.closest("[data-l]");if(!b)return;
     var a=b.dataset.l,w;
-    if(a==="allcats"){o.cats=CATS.map(function(c){return c[0]});savePath(o);renderLearn()}
+    if(a==="setup"){L.setup=!L.setup;renderLearn();var f=$('#learn [data-l="setup"]');if(f)f.focus()}
+    else if(a==="allcats"){o.cats=CATS.map(function(c){return c[0]});savePath(o);renderLearn()}
     else if(a==="nocats"){o.cats=[];savePath(o);renderLearn()}
     else if(a==="gcse"){o.cats=CATS.filter(function(c){return c[2]}).map(function(c){return c[0]});savePath(o);renderLearn()}
     else if(a==="give")giveSet();
     else if(a==="home"){L.stage="home";renderLearn()}
-    else if(a==="game"){L.stage="home";renderLearn();show("quiz");$(".tabs").scrollIntoView({block:"start"})}
+    else if(a==="game"){L.stage="home";renderLearn();show("quiz");toView()}
     else if(a==="review")startReview();
     else if(a==="addall"){
       var list=pathWords(o).filter(function(w){return isNew(w,o)});
@@ -2154,7 +2253,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   $("#q-goal").addEventListener("click",function(e){
     var b=e.target.closest("[data-g]");if(!b)return;
     var m=b.dataset.g;
-    if(m==="learn"){show("learn");$(".tabs").scrollIntoView({block:"start"});return}
+    if(m==="learn"){show("learn");toView();return}
     if(m==="check"){show("known");startCheck();return}
     Q.goNext=null;pickMode(m);newQ();
   });
@@ -2176,7 +2275,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   function startStep(step){
     show(step==="old"?"known":step==="new"?"learn":"quiz");
     if(step==="old")startCheck();
-    $(".tabs").scrollIntoView({behavior:"smooth",block:"start"});
+    toView(true);
   }
   if(window.UA)UA.mountToday($("#ua-today"),{app:"kalimat-plus",ua:function(){return curProfile().ua},name:function(){return curProfile().name},state:practiceState,start:startStep,onSettings:applySettings});
   if("speechSynthesis" in window){

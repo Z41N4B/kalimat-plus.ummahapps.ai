@@ -22,6 +22,7 @@ Discussion phrases (opinions, agreeing, contrast, cause and effect, linking word
 - Up to 6 learners on one device, each with their own progress, shared with Takallum Kids, Kalimat and Takallum. Learner p1 keeps the original `kpp-` storage keys.
 - Words known from the other apps: a note on the Words tab offers to mark them as learned
 - About tab: common questions about Kalimat Plus. The text stays in the page so search engines can read it.
+- Layout: on phones the tabs sit in a bar at the bottom (Learn, Words, Game, Known well, and More for My words and About); on bigger screens they stay in one row at the top. The learner button at the top opens a menu to switch, add, rename or remove learners, next to the settings gear. Learn is the start page: the Learn new words panel, then Your learned words, then Today's practice. The progress card shows on Learn and Known well only, and the Words tab help and voice settings fold away.
 
 ## Shared with the other apps
 Takallum Kids, Kalimat, Kalimat Plus and Takallum share four things on the same device through `ummah.js`, which is copied into each app's folder (keep the four copies identical):

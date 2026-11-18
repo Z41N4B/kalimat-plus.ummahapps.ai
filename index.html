@@ -378,6 +378,7 @@ details.tips p{margin:0 0 8px;color:var(--ink-2)}
 details.tips .voice-row{margin-bottom:8px}
 .lhero .lgo{margin-top:12px}
 .lhero p.meta{margin:4px 0}
+.linkbtn.inl{min-height:0;padding:0;font-size:inherit;vertical-align:baseline}
 .lhero .lsum{margin:2px 0 6px;color:var(--ink-2)}
 .lhero .lsetup{margin-top:14px;padding-top:4px;border-top:1px solid var(--line)}
 .lhero h3.big{font-size:1.15rem;margin:0 0 2px}
@@ -2112,7 +2113,7 @@ details.tips .voice-row{margin-bottom:8px}
         (o.cats.length?'<p class="meta">'+esc(catLabel(o))+' · '+o.n+' at a time · <button class="linkbtn" type="button" data-l="setup" aria-expanded="'+setup+'">'+(setup?"Done":"Change")+'</button></p>'+
           '<p class="meta">'+started+' of '+all.length+' words started.</p>'+progBar(started,0,all.length||1,"thin"):'<p class="meta">Tick at least one group below to start.</p>')+
         '<div class="actions lgo"><button class="btn primary big" type="button" data-l="give"'+(give?"":" disabled")+'>'+(give?"Give me "+give+" new word"+(give===1?"":"s"):o.cats.length?"Every word here is started":"Tick a group first")+'</button></div>'+
-        (left>give?'<p class="meta">Or take every word in these groups at once: <button class="linkbtn" type="button" data-l="addall">Add all '+left+' to my learned words</button></p>':"")+
+        (left?'<p class="meta">Already know some of these? Tap <b>I know it</b> when a word comes up, or tap <b>Known well</b> on any word in the <button class="linkbtn inl" type="button" data-l="words">Words tab</button>.</p>':"")+
         (setup?'<div class="lsetup"><h3>Choose your groups</h3>'+
         '<p class="meta">Tick as many groups as you like. <button class="linkbtn" type="button" data-l="allcats">Tick all</button> <button class="linkbtn" type="button" data-l="gcse">GCSE only</button> <button class="linkbtn" type="button" data-l="nocats">Clear</button></p>'+
         '<div class="chips" role="group" aria-label="Groups">'+CATS.map(function(c,i){
@@ -2188,12 +2189,7 @@ details.tips .voice-row{margin-bottom:8px}
     else if(a==="home"){L.stage="home";renderLearn()}
     else if(a==="game"){L.stage="home";renderLearn();show("quiz");toView()}
     else if(a==="review")startReview();
-    else if(a==="addall"){
-      var list=pathWords(o).filter(function(w){return isNew(w,o)});
-      if(!list.length||!confirm("Add all "+list.length+" new words in "+catLabel(o)+" to your learned words?\n\nNext you can meet them one by one, and they all go into the game."))return;
-      addToLearning(list);L.mode="meet";L.list=list;L.idx=0;lgo("cards");
-      toast(list.length+" words added to your learned words.");
-    }
+    else if(a==="words"){show("words");toView()}
     else if(a==="swap"||a==="knowit"){
       var k=+b.dataset.i;w=L.list[k];if(!w)return;
       if(a==="swap"){o.skip.push(w.id);savePath(o)}else{knowNow(w);toast(w.en+" is now Known well.")}

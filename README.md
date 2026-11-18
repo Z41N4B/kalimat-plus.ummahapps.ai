@@ -19,8 +19,9 @@ Discussion phrases (opinions, agreeing, contrast, cause and effect, linking word
 - Mark words as learned; 5 right in a row in the game moves a word to Known well
 - Spaced memory checks bring Known well words back now and then; forgotten ones return to the game
 - Add your own words
-- Up to 3 learners on one device, each with their own progress, shared with Takallum Kids, Kalimat and Takallum. Learner p1 keeps the original `kpp-` storage keys.
+- Up to 6 learners on one device, each with their own progress, shared with Takallum Kids, Kalimat and Takallum. Learner p1 keeps the original `kpp-` storage keys.
 - Words known from the other apps: a note on the Words tab offers to mark them as learned
+- About tab: common questions about Kalimat Plus. The text stays in the page so search engines can read it.
 
 ## Shared with the other apps
 Takallum Kids, Kalimat, Kalimat Plus and Takallum share four things on the same device through `ummah.js`, which is copied into each app's folder (keep the four copies identical):

@@ -152,7 +152,7 @@ img{max-width:100%}
 .who-form{display:flex;flex-wrap:wrap;gap:8px;flex-basis:100%}
 .who-form input{flex:1 1 160px;width:auto}
 .linkbtn{font:inherit;font-size:.85rem;font-weight:700;min-height:38px;padding:4px 6px;border:0;background:none;color:var(--accent);text-decoration:underline;cursor:pointer}
-.tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:20px}
+.tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-bottom:20px}
 @media (max-width:600px){.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .tab{font:inherit;font-weight:800;font-size:.9rem;line-height:1.2;min-height:44px;padding:8px 6px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer}
 .tab[aria-current="page"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
@@ -227,6 +227,8 @@ label{font-weight:800;font-size:.9rem;color:var(--ink-2)}
 .about h3{color:var(--ink);font-size:.95rem;margin:16px 0 6px}
 .about p{margin:0 0 10px}
 .about details{border-top:1px solid var(--line);padding:8px 0}
+#view-about{margin-top:0}
+#view-about h2{border-top:0;padding-top:0}
 .about summary{color:var(--ink);font-weight:500;cursor:pointer;padding:4px 0}
 .noteblock{display:none;padding:10px 12px;background:var(--card);border:1.5px dashed var(--line);border-radius:12px;font-size:.9rem;line-height:1.55;color:var(--ink-2)}
 .noteblock.on,.grid.show-notes .noteblock{display:block}
@@ -370,6 +372,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     <button class="tab" data-tab="quiz">Game</button>
     <button class="tab" data-tab="known">Known well</button>
     <button class="tab" data-tab="mine">My words</button>
+    <button class="tab" data-tab="about">About</button>
   </nav>
 
   <main>
@@ -539,9 +542,8 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       </form>
       <ul class="rows" id="mine-list"></ul>
     </section>
-  </main>
-  <footer>
-    <section class="about" aria-labelledby="h-about">
+
+    <section class="about" id="view-about" aria-labelledby="h-about" hidden>
       <h2 id="h-about">About Kalimat Plus</h2>
       <h3>Questions</h3>
       <details><summary>What is Kalimat Plus?</summary><p>A free Fusha (Modern Standard Arabic) vocabulary trainer for learners who know the basics and want words for deeper conversations: religion and worship, tarbiyyah and upbringing, relationships and character, and the environment.</p></details>
@@ -551,6 +553,10 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       <details><summary>How does it pronounce the Arabic?</summary><p>It uses your device's built-in text-to-speech voice. For the best pronunciation, add an Arabic voice in your phone or computer's speech or language settings, then choose it in the Voice menu.</p></details>
       <details><summary>Where is my progress saved?</summary><p>Your learned and known-well words and your own words are saved in your browser on your device. Nothing is sent to a server.</p></details>
       <details><summary>Who is it for?</summary><p>Intermediate learners of Modern Standard Arabic, including GCSE and A-level students, home-schoolers, and adults in Quranic or Madinah-style Arabic classes who want to discuss ideas in Fusha.</p></details>
+    </section>
+  </main>
+  <footer>
+    <section class="about">
       <p>Kalimat Plus is part of <a href="https://ummahapps.ai/">Ummah Apps</a>.</p>
     </section>
     <nav class="ua-fam" aria-labelledby="ua-fam-h">
@@ -940,7 +946,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     ["p","عِنْدَمَا كُنْتُ صَغِيرًا","when I was young","","","عِنْدَمَا كُنْتُ صَغِيرًا كُنْتُ أَسْكُنُ فِي الرِّيفِ.","When I was young I used to live in the countryside."]
   ],
   g1daily:[
-    ["n","رُوتِين","routine","","","رُوتِينِي الْيَوْمِيُّ بَسِيطٌ.","My daily routine is simple."],
+    ["n","نِظَامٌ يَوْمِيٌّ","daily routine","","","نِظَامِي الْيَوْمِيُّ بَسِيطٌ.","My daily routine is simple."],
     ["n","تَقْلِيد","tradition, custom","تَقَالِيد","b","لِكُلِّ بَلَدٍ تَقَالِيدُ خَاصَّةٌ.","Every country has its own traditions."],
     ["a","صِحِّيّ","healthy","","","آكُلُ طَعَامًا صِحِّيًّا كُلَّ يَوْمٍ.","I eat healthy food every day."],
     ["p","الْوَجَبَاتُ السَّرِيعَةُ","fast food","","","الْوَجَبَاتُ السَّرِيعَةُ لَيْسَتْ صِحِّيَّةً.","Fast food is not healthy."],
@@ -1219,9 +1225,9 @@ a.ua-app:hover{border-color:var(--f-lapis)}
   function lsGet(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
   function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
-  // Up to 3 learners share a device, the same learners as in the other Ummah Apps (ummah.js).
+  // Up to 6 learners share a device, the same learners as in the other Ummah Apps (ummah.js).
   // Learner p1 keeps the original storage keys so earlier progress carries over.
-  var MAXP=3;
+  var MAXP=6;
   var profiles=lsGet("kpp-profiles",null);
   if(!profiles||!profiles.list||!profiles.list.length)profiles={list:[{id:"p1",name:"Learner 1"}],cur:"p1"};
   if(window.UA){
@@ -1579,9 +1585,9 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     if(Q.mode==="forms")pool=pool.filter(function(w){return w.t==="v"&&w.pres});
     return pool;
   }
-  // After a right answer the next question comes by itself, 2 seconds later, unless the learner has moved on
+  // After a right answer the next question comes by itself, 3 seconds later, unless the learner has moved on
   var autoT=0;
-  function autoNext(t){clearTimeout(autoT);autoT=setTimeout(function(){if(!$("#view-quiz").hidden&&Q.target===t&&Q.locked)newQ()},2000)}
+  function autoNext(t){clearTimeout(autoT);autoT=setTimeout(function(){if(!$("#view-quiz").hidden&&Q.target===t&&Q.locked)newQ()},3000)}
   function newQ(){
     clearTimeout(autoT);
     if(Q.goNext){var gn=Q.goNext;Q.goNext=null;pickMode(gn)}
@@ -1881,7 +1887,7 @@ a.ua-app:hover{border-color:var(--f-lapis)}
     stopSpeech();
     if(name!=="known"&&C.cur)endCheck();
     tabs.forEach(function(t){if(t.dataset.tab===name)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
-    ["learn","words","quiz","known","mine"].forEach(function(n){$("#view-"+n).hidden=(n!==name)});
+    ["learn","words","quiz","known","mine","about"].forEach(function(n){$("#view-"+n).hidden=(n!==name)});
     if(name==="learn")renderLearn();
     if(name==="known")renderKnown();
     if(name==="quiz")newQ();
@@ -2070,8 +2076,8 @@ a.ua-app:hover{border-color:var(--f-lapis)}
       q.picked=b.dataset.opt;var ok=q.picked===q.cur;
       tone(ok);if(ok)q.done++;else if(!q.miss[q.cur]){q.miss[q.cur]=1;q.queue.push(q.cur)}else q.done++;
       renderLearn();
-      // After a right answer the next check word comes by itself 2 seconds later
-      if(ok&&q.queue.length)(function(id){setTimeout(function(){if(L.stage==="check"&&L.q===q&&q.cur===id&&q.picked!=null&&!$("#view-learn").hidden)newCheck()},2000)})(q.cur);
+      // After a right answer the next check word comes by itself 3 seconds later
+      if(ok&&q.queue.length)(function(id){setTimeout(function(){if(L.stage==="check"&&L.q===q&&q.cur===id&&q.picked!=null&&!$("#view-learn").hidden)newCheck()},3000)})(q.cur);
       return;
     }
     b=e.target.closest("[data-l]");if(!b)return;
